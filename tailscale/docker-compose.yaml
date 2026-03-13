@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  tailscale:
+    image: tailscale/tailscale
+    container_name: tailscale
+    hostname: dockerbox   # This will be the device name in Tailscale
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    network_mode: "host"
+    volumes:
+      - /opt/backed-up-volumes/tailscale/tailscale-state:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - TS_EXTRA_ARGS=--advertise-exit-node --advertise-routes=10.100.10.0/24
+      - TS_STATE_DIR=/var/lib/tailscale
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"

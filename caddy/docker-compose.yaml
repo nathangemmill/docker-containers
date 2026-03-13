@@ -1,0 +1,53 @@
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # optionally set args if you want to change plugin list dynamically
+    container_name: caddy
+    restart: unless-stopped
+    networks:
+      - caddynet
+    environment:
+      # put your Cloudflare token in a .env file (see .env.example below)
+      - CF_API_TOKEN=${CF_API_TOKEN}
+      # other useful envs
+      - TZ=Australia/Melbourne
+    volumes:
+      - /opt/backed-up-volumes/caddy/conf:/etc/caddy        # Caddyfile + any configs
+      - /opt/backed-up-volumes/caddy/site:/srv             # web root
+      - /opt/backed-up-volumes/caddy/caddy_data:/data
+      - /opt/backed-up-volumes/caddy/caddy_config:/config
+    depends_on:
+      - authelia
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+      - "com.centurylinklabs.watchtower.monitor-only=true"
+
+  authelia:
+    image: authelia/authelia:latest
+    container_name: authelia
+    restart: unless-stopped
+    networks:
+      - caddynet
+    environment:
+      - TZ=Australia/Melbourne
+    volumes:
+      - /opt/backed-up-volumes/caddy/authelia:/config
+    expose:
+      - 9091
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:
+  caddynet:
+    external: true
+    driver: bridge
+    name: caddynet

@@ -1,0 +1,73 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest # 
+    container_name: mealie
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 1000M # 
+    volumes:
+      - /opt/backed-up-volumes/mealie/mealie-data:/app/data/
+    networks:
+      - caddynet
+      - mealie
+    environment:
+      # Set Backend ENV Variables Here
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      TZ: Australia/Melbourne
+      BASE_URL: https://mealie.itgo.com.au
+      # Database Settings
+      DB_ENGINE: postgres
+      POSTGRES_USER: mealie
+      POSTGRES_PASSWORD: ${postgres_mealie_pass}
+      POSTGRES_SERVER: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mealie
+      # Email
+      SMTP_HOST: mail.smtp2go.com
+      SMTP_PORT: 587
+      SMTP_FROM_NAME: Mealie
+      SMTP_AUTH_STRATEGY: TLS
+      SMTP_FROM_EMAIL: no-reply@itgo.com.au
+      SMTP_USER: itgo.com.au
+      SMTP_PASSWORD: ${smtp_2_go_pass}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  postgres:
+    container_name: postgres
+    image: postgres:17
+    restart: always
+    networks:
+      - mealie
+    volumes:
+      - /opt/backed-up-volumes/mealie/mealie-pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${postgres_mealie_pass}
+      POSTGRES_USER: mealie
+      PGUSER: mealie
+      POSTGRES_DB: mealie
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+volumes:
+  mealie-data:
+  mealie-pgdata:
+
+networks:
+  caddynet:
+    external: true
+    name: caddynet
+  mealie:
+    external: true
+    name: mealie

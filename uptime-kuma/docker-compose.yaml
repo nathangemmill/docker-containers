@@ -1,0 +1,15 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks:
+      - caddynet
+    volumes:
+      - /opt/backed-up-volumes/uptime-kuma/data:/app/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+networks:
+  caddynet:
+    external: true
+    name: caddynet

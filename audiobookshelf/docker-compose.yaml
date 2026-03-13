@@ -1,0 +1,20 @@
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    networks:
+      - caddynet
+    volumes:
+      - /opt/not-backed-up-volumes/audiobookshelf/audiobooks:/audiobooks
+      - /opt/not-backed-up-volumes/audiobookshelf/podcasts:/podcasts
+      - /opt/backed-up-volumes/audiobookshelf/config:/config
+      - /opt/backed-up-volumes/audiobookshelf/metadata:/metadata
+    environment:
+      - TZ=Australia/Melbourne
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true
+    name: caddynet

@@ -1,0 +1,27 @@
+services:
+  papra:
+    image: ghcr.io/papra-hq/papra:latest-root
+    container_name: papra
+    restart: unless-stopped
+    environment:
+      - APP_BASE_URL=https://papra.internal.itgo.com.au
+      - AUTH_SECRET=${auth_secret}
+      - AUTH_IS_REGISTRATION_ENABLED=${AUTH_IS_REGISTRATION_ENABLED}
+      - EMAILS_FROM_ADDRESS=${EMAILS_FROM_ADDRESS}
+      - EMAILS_DRIVER=${EMAILS_DRIVER}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=${SMTP_SECURE}
+    volumes:
+      - /opt/backed-up-volumes/papra/data:/app/app-data
+    networks:
+      - caddynet
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+networks:
+  caddynet:
+    external: true
+    name: caddynet

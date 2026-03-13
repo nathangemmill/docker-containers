@@ -1,0 +1,16 @@
+services:
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    networks:
+     - caddynet
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${tunnel_token}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+networks:
+  caddynet:
+    external: true
+    name: caddynet

@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  docker-volume-backup:
+    image: offen/docker-volume-backup:latest
+    container_name: docker-volume-backup
+    dns:
+      - 1.1.1.1
+    restart: unless-stopped
+    env_file: ./backup.env
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    volumes:
+      # allow the backup container to stop/start containers if configured
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+      # App data mounts (read-only inside the backup container)
+#      - /home/nathangemmill/pihole/etc-pihole:/backup/pihole-etc:ro
+#      - /home/nathangemmill/vaultwarden/vw-data:/backup/vaultwarden-vw-data:ro
+#      - /home/nathangemmill/tailscale/tailscale-state:/backup/tailscale-state:ro
+#      - /home/nathangemmill/netalertx/config:/backup/netalertx-config:ro
+#      - /home/nathangemmill/netalertx/db:/backup/netalertx-db:ro
+#      - /home/nathangemmill/mealie/mealie-data:/backup/mealie-data:ro
+#      - /home/nathangemmill/mealie/mealie-pgdata:/backup/mealie-pgdata:ro
+#      - /home/nathangemmill/arr-stack/data:/backup/arr-stack-data:ro
+#      - /home/nathangemmill/iSponsorBlockTV:/backup/iSponsorBlockTV:ro
+      - /home/nathangemmill/plex/config:/backup/plex-config:ro
+#      - /home/nathangemmill/caddy/caddy_data:/backup/caddy-data:ro
+#      - /home/nathangemmill/caddy/caddy_config:/backup/caddy-config:ro
+#      - /home/nathangemmill/caddy/conf:/backup/caddy-conf:ro
+#      - /home/nathangemmill/uptime-kuma/data:/backup/uptime-kuma-data:ro
+#      - /home/nathangemmill/invio/:/backup/invio:ro
+#      - /home/nathangemmill/caddy/authelia/users-db:/backup/authelia/users-db:ro
+#      - /home/nathangemmill/caddy/authelia/storage-db:/backup/authelia/storage-db:ro
+#      - /home/nathangemmill/beszel/beszel_data:/backup/beszel_data:ro
+      - /opt/backed-up-volumes:/backup/backed-up-volumes:ro
+#      - /home/nathangemmill/audiobookshelf/metadata:/backup/audiobookshelf_metadata:ro
+#      - /home/nathangemmill/audiobookshelf/config:/backup/audiobookshelf_config:ro
+      # Local archive storage (container writes archives here)
+      - /home/nathangemmill/docker-volume-backup/archive:/archive
+#      - /home/nathangemmill/papra/data:/backup/papra-data:ro
+
+    # optional resource limits
+    # mem_limit: 512m
+    # cpus: 0.5
+
+# no named volumes required here since we back up bind mounts

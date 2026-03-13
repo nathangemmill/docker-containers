@@ -1,0 +1,14 @@
+services:
+  it-tools:
+    image: corentinth/it-tools:latest
+    container_name: it-tools
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - caddynet
+    restart: unless-stopped
+
+networks:
+  caddynet:
+    external: true
+    name: caddynet

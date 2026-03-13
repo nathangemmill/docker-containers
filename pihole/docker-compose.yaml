@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    network_mode: "host"        # <-- host networking so Pi-hole can bind to port 53 directly
+    environment:
+      # Set the appropriate timezone for your location
+      TZ: 'Australia/Melbourne'
+      # Set a password to access the web interface. Set to a value you choose.
+      # FTLCONF_webserver_api_password: 'changeme'
+      # In bridge mode you'd set dns_listeningMode to 'all'. Host mode is fine with this value too.
+      FTLCONF_dns_listeningMode: 'all'
+    # Volumes store your data between container upgrades
+    volumes:
+      - /opt/backed-up-volumes/pihole/etc-pihole:/etc/pihole
+      # If you have custom dnsmasq configs, uncomment and use the line below:
+      # - /home/nathangemmill/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN   # required if using Pi-hole DHCP, otherwise optional
+      - SYS_TIME    # required if Pi-hole should set host time (NTP)
+      - SYS_NICE    # optional
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"

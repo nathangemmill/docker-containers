@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    restart: unless-stopped
+    networks:
+      - caddynet
+    environment:
+      - TZ=Australia/Melbourne  # Change to your time zone
+      - PLEX_CLAIM=claim-${plex_claim}           # Optional: for linking to your Plex account
+    volumes:
+      - ./config:/config
+      - ./media:/media
+    devices:
+      - /dev/dri:/dev/dri       # (Optional) For hardware transcoding
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+networks:
+  caddynet:
+    external: true
+    name: caddynet

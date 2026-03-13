@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      #- /root/.docker/config.json:/config.json  # optional authentication
+
+    command:
+      - --interval=30                      # check every 30 seconds
+      - --label-enable                     # only update labelled containers
+
+    environment:
+      - TZ=Australia/Melbourne
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=pushover://shoutrrr:${pushover_secret}/
+      - WATCHTOWER_NOTIFICATION_REPORT=true
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+      - "com.centurylinklabs.watchtower.monitor-only=true"
