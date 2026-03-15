@@ -48,7 +48,7 @@ services:
     volumes:
       - /opt/backed-up-volumes/mealie/mealie-pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: ${postgres_mealie_pass}
+      POSTGRES_PASSWORD: ${MEALIE_POSTGRES_PASSWORD}
       POSTGRES_USER: mealie
       PGUSER: mealie
       POSTGRES_DB: mealie
