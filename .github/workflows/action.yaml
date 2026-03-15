@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: dockerbox
+    runs-on: [self-hosted, linux, x64]
 
     env:
       #beszel
