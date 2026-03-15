@@ -1,0 +1,57 @@
+name: Deploy Docker Containers
+
+on:
+#  push:
+#    branches:
+#      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: dockerbox
+
+    env:
+      #beszel
+      BESZEL_ENVIRONMENT_TOKEN: ${{secrets.BESZEL_ENVIRONMENT_TOKEN}}
+      BESZEL_ENVIRONMENT_KEY: ${{secrets.BESZEL_ENVIRONMENT_KEY}}
+      #caddy
+      CADDY_CF_API_TOKEN: ${{secrets.CADDY_CF_API_TOKEN}}
+      #cloudflare tunnel
+      CLOUDFLARED_TUNNEL_TOKEN: ${{secrets.CLOUDFLARED_TUNNEL_TOKEN}}
+      #invio              
+      INVIO_ADMIN_USER: ${{secrets.INVIO_ADMIN_USER}}
+      INVIO_ADMIN_PASS: ${{secrets.INVIO_ADMIN_PASS}}
+      INVIO_JWT_SECRET: ${{secrets.INVIO_JWT_SECRET}}
+      #mealie
+      MEALIE_POSTGRES_PASSWORD: ${{secrets.MEALIE_POSTGRES_PASSWORD}}
+      MEALIE_SMTP_USER: ${{secrets.MEALIE_SMTP_USER}}
+      MEALIE_SMTP_PASSWORD: ${{secrets.MEALIE_SMTP_PASSWORD}}
+      #papra
+      PAPRA_AUTH_SECRET: ${{secrets.PAPRA_AUTH_SECRET}}
+      PAPRA_EMAILS_FROM_ADDRESS: ${{secrets.PAPRA_EMAILS_FROM_ADDRESS}}
+      PAPRA_SMTP_HOST: ${{secrets.PAPRA_SMTP_HOST}}
+      PAPRA_SMTP_USER: ${{secrets.PAPRA_SMTP_USER}}
+      PAPRA_SMTP_PASSWORD: ${{secrets.PAPRA_SMTP_PASSWORD}}
+      PAPRA_SMTP_PORT: ${{secrets.PAPRA_SMTP_PORT}}
+      #plex
+      PLEX_CLAIM: ${{secrets.PLEX_CLAIM}}
+      #vaultwarden
+      VAULTWARDEN_SMTP_USERNAME: ${{secrets.VAULTWARDEN_SMTP_USERNAME}}
+      VAULTWARDEN_SMTP_PASSWORD: ${{secrets.VAULTWARDEN_SMTP_PASSWORD}}
+      VAULTWARDEN_ADMIN_TOKEN: ${{secrets.VAULTWARDEN_ADMIN_TOKEN}}
+      #watchtower
+      WATCHTOWER_NOTIFICATION_URL: ${{secrets.WATCHTOWER_NOTIFICATION_URL}}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy all containers
+        run: |
+          for dir in */; do
+            if [ -f "${dir}docker-compose.yaml" ] || [ -f "${dir}docker-compose.yml" ]; then
+              echo ">>> Deploying ${dir}"
+              docker compose -f "${dir}docker-compose.yaml" up -d --remove-orphans || \
+              docker compose -f "${dir}docker-compose.yml" up -d --remove-orphans
+            fi
+          done

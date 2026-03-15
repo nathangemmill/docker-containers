@@ -25,8 +25,8 @@ services:
     environment:
       LISTEN: /beszel_socket/beszel.sock
       HUB_URL: https://bz.itgo.com.au
-      TOKEN: ${environment_token}
-      KEY: ${environment_key}
+      TOKEN: ${BESZEL_ENVIRONMENT_TOKEN}
+      KEY: ${BESZEL_ENVIRONMENT_KEY}
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
 

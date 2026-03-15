@@ -12,10 +12,10 @@ services:
       SMTP_PORT: '587' # Typically 587 for TLS/STARTTLS, or 465 for SSL/TLS
       SMTP_FROM_NAME: 'Vaultwarden' # Name to appear in "From" field
       SMTP_FROM_EMAIL: 'credentials@itgo.com.au' # Email address for "From" field
-      SMTP_USERNAME: 'itgo.com.au' # Your SMTP username
-      SMTP_PASSWORD: ${smtp_2_go_pass} # Your SMTP password (use app passwords for services like Gmail)
+      SMTP_USERNAME: ${VAULTWARDEN_SMTP_USERNAME} # Your SMTP username
+      SMTP_PASSWORD: ${VAULTWARDEN_SMTP_PASSWORD} # Your SMTP password (use app passwords for services like Gmail)
       SMTP_TLS: 'true' # Set to 'true' if using STARTTLS (Port 587)
-      ADMIN_TOKEN: ${admin_token}
+      ADMIN_TOKEN: ${VAULTWARDEN_ADMIN_TOKEN}
     volumes:
       - /opt/backed-up-volumes/vaultwarden/vw-data:/data # the path before the : can be changed
     labels:

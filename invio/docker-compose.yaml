@@ -12,10 +12,10 @@ services:
     env_file:
       - .env
     environment:
-      ADMIN_USER: ${ADMIN_USER}
-      ADMIN_PASS: ${ADMIN_PASS}
-      JWT_SECRET: ${JWT_SECRET}
-      DATABASE_PATH: ${DATABASE_PATH:-/app/data/invio.db}
+      ADMIN_USER: ${INVIO_ADMIN_USER}
+      ADMIN_PASS: ${INVIO_ADMIN_PASS}
+      JWT_SECRET: ${INVIO_JWT_SECRET}
+#      DATABASE_PATH: ${INVIO_DATABASE_PATH:-/app/data/invio.db}
     volumes:
       - /opt/backed-up-volumes/invio/data:/app/data
     restart: unless-stopped
@@ -28,11 +28,11 @@ services:
   frontend:
     container_name: invio-frontend
     image: ghcr.io/kittendevv/invio-frontend:latest
-    env_file:
-      - .env
-    environment:
-      PORT: ${FRONTEND_PORT_INTERNAL:-8000}
-      BACKEND_URL: ${BACKEND_URL:-http://invio-backend:3000}
+#    env_file:
+#      - .env
+#    environment:
+#      PORT: ${FRONTEND_PORT_INTERNAL:-8000}
+#      BACKEND_URL: ${BACKEND_URL:-http://invio-backend:3000}
     depends_on:
       - backend
     restart: unless-stopped

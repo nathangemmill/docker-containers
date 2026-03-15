@@ -10,7 +10,7 @@ services:
       - caddynet
     environment:
       # put your Cloudflare token in a .env file (see .env.example below)
-      - CF_API_TOKEN=${CF_API_TOKEN}
+      - CF_API_TOKEN=${CADDY_CF_API_TOKEN}
       # other useful envs
       - TZ=Australia/Melbourne
     volumes:

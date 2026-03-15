@@ -7,7 +7,7 @@ services:
      - caddynet
     command: tunnel run
     environment:
-      - TUNNEL_TOKEN=${tunnel_token}
+      - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
 networks:

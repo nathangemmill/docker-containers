@@ -22,7 +22,7 @@ services:
       # Database Settings
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
-      POSTGRES_PASSWORD: ${postgres_mealie_pass}
+      POSTGRES_PASSWORD: ${MEALIE_POSTGRES_PASSWORD}
       POSTGRES_SERVER: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
@@ -32,8 +32,8 @@ services:
       SMTP_FROM_NAME: Mealie
       SMTP_AUTH_STRATEGY: TLS
       SMTP_FROM_EMAIL: no-reply@itgo.com.au
-      SMTP_USER: itgo.com.au
-      SMTP_PASSWORD: ${smtp_2_go_pass}
+      SMTP_USER: ${MEALIE_SMTP_USER}
+      SMTP_PASSWORD: ${MEALIE_SMTP_PASSWORD}
     depends_on:
       postgres:
         condition: service_healthy
