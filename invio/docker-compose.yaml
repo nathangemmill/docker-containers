@@ -9,8 +9,8 @@ services:
   backend:
     container_name: invio-backend
     image: ghcr.io/kittendevv/invio-backend:latest
-    env_file:
-      - .env
+#    env_file:
+#      - .env
     environment:
       ADMIN_USER: ${INVIO_ADMIN_USER}
       ADMIN_PASS: ${INVIO_ADMIN_PASS}
