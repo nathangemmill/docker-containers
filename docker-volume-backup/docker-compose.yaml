@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   docker-volume-backup:
     image: offen/docker-volume-backup:latest
