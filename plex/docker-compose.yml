@@ -9,10 +9,10 @@ services:
       - caddynet
     environment:
       - TZ=Australia/Melbourne  # Change to your time zone
-      - PLEX_CLAIM=claim-${plex_claim}           # Optional: for linking to your Plex account
+      - PLEX_CLAIM=claim-${PLEX_CLAIM}           # Optional: for linking to your Plex account
     volumes:
-      - ./config:/config
-      - ./media:/media
+      - /home/nathangemmill/plex/config:/config
+      - /home/nathangemmill/plex/media:/media
     devices:
       - /dev/dri:/dev/dri       # (Optional) For hardware transcoding
     labels:
