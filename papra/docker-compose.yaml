@@ -1,6 +1,7 @@
 services:
   papra:
-    image: ghcr.io/papra-hq/papra:latest-root
+    build:
+      context: https://github.com/nathangemmill/papra.git#nathangemmill/add-notes-field
     container_name: papra
     restart: unless-stopped
     environment:
