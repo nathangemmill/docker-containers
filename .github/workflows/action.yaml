@@ -56,12 +56,7 @@ jobs:
           for dir in */; do
             if [ -f "${dir}docker-compose.yaml" ] || [ -f "${dir}docker-compose.yml" ]; then
               echo ">>> Deploying ${dir}"
-              if [ "${dir}" = "papra/" ]; then
-                docker compose -f "${dir}docker-compose.yaml" up -d --build --remove-orphans || \
-                docker compose -f "${dir}docker-compose.yml" up -d --build --remove-orphans
-              else
-                docker compose -f "${dir}docker-compose.yaml" up -d --remove-orphans || \
-                docker compose -f "${dir}docker-compose.yml" up -d --remove-orphans
-              fi
+              docker compose -f "${dir}docker-compose.yaml" up -d --remove-orphans || \
+              docker compose -f "${dir}docker-compose.yml" up -d --remove-orphans
             fi
           done

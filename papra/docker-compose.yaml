@@ -1,8 +1,6 @@
 services:
   papra:
-    build:
-      context: https://github.com/nathangemmill/papra.git#nathangemmill/add-notes-field
-      dockerfile: packages/app/Dockerfile
+    image: ghcr.io/papra-hq/papra:latest
     container_name: papra
     restart: unless-stopped
     environment:
