@@ -21,6 +21,7 @@ services:
       NOTIFICATION_LEVEL: info
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
     volumes:
       # allow the backup container to stop/start containers if configured
       - /var/run/docker.sock:/var/run/docker.sock:ro

@@ -56,3 +56,14 @@ jobs:
               docker compose -f "${dir}docker-compose.yaml" up -d --remove-orphans
             fi
           done
+
+      - name: Remove unmanaged containers
+        run: |
+          docker ps -q | while read id; do
+            label=$(docker inspect --format '{{index .Config.Labels "managed-by"}}' "$id")
+            if [ "$label" != "pipeline" ]; then
+              name=$(docker inspect --format '{{.Name}}' "$id")
+              echo "Removing unmanaged container: $name"
+              docker rm -f "$id"
+            fi
+          done

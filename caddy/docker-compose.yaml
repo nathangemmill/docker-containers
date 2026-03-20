@@ -26,6 +26,7 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
       - "com.centurylinklabs.watchtower.monitor-only=true"
+      - "managed-by=pipeline"
 
   authelia:
     image: authelia/authelia:latest
@@ -41,6 +42,7 @@ services:
       - 9091
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
+      - "managed-by=pipeline"
 
 volumes:
   caddy_data:

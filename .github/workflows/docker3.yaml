@@ -32,3 +32,14 @@ jobs:
           docker compose -f watchtower/docker-compose.yaml up -d --remove-orphans
           docker compose -f docker-volume-backup/docker-compose.docker3.yaml up -d --remove-orphans
           docker compose -f unifi/docker-compose.docker3.yaml up -d --remove-orphans
+
+      - name: Remove unmanaged containers
+        run: |
+          docker ps -q | while read id; do
+            label=$(docker inspect --format '{{index .Config.Labels "managed-by"}}' "$id")
+            if [ "$label" != "pipeline" ]; then
+              name=$(docker inspect --format '{{.Name}}' "$id")
+              echo "Removing unmanaged container: $name"
+              docker rm -f "$id"
+            fi
+          done

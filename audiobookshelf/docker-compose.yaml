@@ -13,6 +13,7 @@ services:
       - TZ=Australia/Melbourne
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
     restart: unless-stopped
 networks:
   caddynet:

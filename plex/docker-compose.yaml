@@ -15,6 +15,7 @@ services:
       - /dev/dri:/dev/dri       # (Optional) For hardware transcoding
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
 networks:
   caddynet:
     external: true

@@ -4,6 +4,7 @@ services:
     container_name: it-tools
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
     networks:
       - caddynet
     restart: unless-stopped

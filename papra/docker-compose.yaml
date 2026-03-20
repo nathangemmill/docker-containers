@@ -20,6 +20,7 @@ services:
       - caddynet
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
 
 networks:
   caddynet:

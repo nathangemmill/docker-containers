@@ -21,3 +21,4 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
       - "com.centurylinklabs.watchtower.monitor-only=true"
+      - "managed-by=pipeline"

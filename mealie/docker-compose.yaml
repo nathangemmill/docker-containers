@@ -39,6 +39,7 @@ services:
         condition: service_healthy
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
   postgres:
     container_name: postgres
     image: postgres:17
@@ -59,6 +60,7 @@ services:
       retries: 3
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
 
 volumes:
   mealie-data:

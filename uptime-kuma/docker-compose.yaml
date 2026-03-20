@@ -9,6 +9,7 @@ services:
       - /opt/backed-up-volumes/uptime-kuma/data:/app/data
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
 networks:
   caddynet:
     external: true

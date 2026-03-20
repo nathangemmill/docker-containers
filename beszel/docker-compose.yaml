@@ -12,6 +12,7 @@ services:
       - caddynet
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
+      - "managed-by=pipeline"
 
   beszel-agent:
     image: henrygd/beszel-agent:latest
@@ -29,6 +30,7 @@ services:
       KEY: ${BESZEL_ENVIRONMENT_KEY}
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
+      - "managed-by=pipeline"
 
 networks:
   caddynet:

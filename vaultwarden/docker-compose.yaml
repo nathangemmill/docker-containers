@@ -20,6 +20,7 @@ services:
       - /opt/backed-up-volumes/vaultwarden/vw-data:/data # the path before the : can be changed
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"
 #    ports:
 #      - 11001:80 # you can replace the 11001 with your preferred port
 networks:
