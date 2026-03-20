@@ -1,7 +1,7 @@
 services:
   unifi:
     image: jacobalberty/unifi:latest
-    container_name: unifi-controller
+    container_name: new-unifi-controller
     init: true
     restart: unless-stopped
     user: unifi
