@@ -31,4 +31,4 @@ jobs:
         run: |
           docker compose -f watchtower/docker-compose.yaml up -d --remove-orphans
           docker compose -f docker-volume-backup/docker-compose.docker3.yaml up -d --remove-orphans
-          docker compose -f unifi/docker-compose.yaml up -d --remove-orphans
+          docker compose -f unifi/docker-compose.docker3.yaml up -d --remove-orphans
