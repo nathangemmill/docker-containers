@@ -1,0 +1,26 @@
+services:
+  docker-volume-backup:
+    image: offen/docker-volume-backup:latest
+    container_name: docker-volume-backup
+    dns:
+      - 1.1.1.1
+    restart: unless-stopped
+    environment:
+      # Azure
+      AZURE_STORAGE_ACCOUNT_NAME: ${DOCKER_VOLUME_BACKUP_AZURE_STORAGE_ACCOUNT_NAME}
+      AZURE_STORAGE_CONNECTION_STRING: ${DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONNECTION_STRING}
+      AZURE_STORAGE_CONTAINER_NAME: ${DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONTAINER_NAME}
+      AZURE_STORAGE_ACCESS_TIER: Cool
+      AZURE_STORAGE_PATH: docker3
+      # Backup
+      BACKUP_ARCHIVE: /archive
+      BACKUP_RETENTION_DAYS: "30"
+      # Notifications
+      NOTIFICATION_URLS: ${DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS}
+      NOTIFICATION_LEVEL: info
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /opt/backed-up-volumes:/backup/backed-up-volumes:ro
+      - /home/nathangemmill/docker-volume-backup/archive:/archive

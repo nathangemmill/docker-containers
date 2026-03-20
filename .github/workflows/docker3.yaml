@@ -1,0 +1,34 @@
+name: Deploy Docker Containers (docker3)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "unifi/**"
+      - "watchtower/**"
+      - "docker-volume-backup/**"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64, docker3]
+
+    env:
+      #watchtower
+      WATCHTOWER_NOTIFICATION_URL: ${{secrets.WATCHTOWER_NOTIFICATION_URL}}
+      #docker-volume-backup
+      DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS: ${{secrets.DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS}}
+      DOCKER_VOLUME_BACKUP_AZURE_STORAGE_ACCOUNT_NAME: ${{secrets.DOCKER_VOLUME_BACKUP_AZURE_STORAGE_ACCOUNT_NAME}}
+      DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONNECTION_STRING: ${{secrets.DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONNECTION_STRING}}
+      DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONTAINER_NAME: ${{secrets.DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONTAINER_NAME}}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy containers
+        run: |
+          docker compose -f watchtower/docker-compose.yaml up -d --remove-orphans
+          docker compose -f docker-volume-backup/docker-compose.docker3.yaml up -d --remove-orphans
+          docker compose -f unifi/docker-compose.yaml up -d --remove-orphans

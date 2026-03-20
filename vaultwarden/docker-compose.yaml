@@ -8,12 +8,12 @@ services:
     environment:
       DOMAIN: "https://bw.itgo.com.au"  # required when using a reverse proxy; your domain; vaultwarden needs to know it's https to work properly with attachments
       SIGNUPS_ALLOWED: "false" # Deactivate this with "false" after you have created your account so that no strangers can register
-      SMTP_HOST: 'mail.smtp2go.com' # Your SMTP server host
-      SMTP_PORT: '587' # Typically 587 for TLS/STARTTLS, or 465 for SSL/TLS
+      SMTP_HOST: ${SMTP_HOST} # Your SMTP server host
+      SMTP_PORT: ${SMTP_PORT} # Typically 587 for TLS/STARTTLS, or 465 for SSL/TLS
       SMTP_FROM_NAME: 'Vaultwarden' # Name to appear in "From" field
       SMTP_FROM_EMAIL: 'credentials@itgo.com.au' # Email address for "From" field
-      SMTP_USERNAME: ${VAULTWARDEN_SMTP_USERNAME} # Your SMTP username
-      SMTP_PASSWORD: ${VAULTWARDEN_SMTP_PASSWORD} # Your SMTP password (use app passwords for services like Gmail)
+      SMTP_USERNAME: ${SMTP_USER} # Your SMTP username
+      SMTP_PASSWORD: ${SMTP_PASSWORD} # Your SMTP password (use app passwords for services like Gmail)
       SMTP_TLS: 'true' # Set to 'true' if using STARTTLS (Port 587)
       ADMIN_TOKEN: ${VAULTWARDEN_ADMIN_TOKEN}
     volumes:

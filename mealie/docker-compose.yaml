@@ -27,13 +27,13 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
       # Email
-      SMTP_HOST: mail.smtp2go.com
-      SMTP_PORT: 587
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
       SMTP_FROM_NAME: Mealie
       SMTP_AUTH_STRATEGY: TLS
       SMTP_FROM_EMAIL: no-reply@itgo.com.au
-      SMTP_USER: ${MEALIE_SMTP_USER}
-      SMTP_PASSWORD: ${MEALIE_SMTP_PASSWORD}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
     depends_on:
       postgres:
         condition: service_healthy

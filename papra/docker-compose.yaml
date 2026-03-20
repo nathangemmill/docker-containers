@@ -9,10 +9,10 @@ services:
       - AUTH_IS_REGISTRATION_ENABLED=false
       - EMAILS_FROM_ADDRESS=${PAPRA_EMAILS_FROM_ADDRESS}
       - EMAILS_DRIVER=smtp
-      - SMTP_HOST=${PAPRA_SMTP_HOST}
-      - SMTP_USER=${PAPRA_SMTP_USER}
-      - SMTP_PASSWORD=${PAPRA_SMTP_PASSWORD}
-      - SMTP_PORT=${PAPRA_SMTP_PORT}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_PORT=${SMTP_PORT}
       - SMTP_SECURE=true
     volumes:
       - /opt/backed-up-volumes/papra/data:/app/app-data
