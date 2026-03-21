@@ -42,7 +42,7 @@ services:
       - "managed-by=pipeline"
   postgres:
     container_name: postgres
-    image: postgres:17
+    image: postgres:17-alpine
     restart: always
     networks:
       - mealie

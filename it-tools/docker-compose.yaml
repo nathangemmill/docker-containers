@@ -1,6 +1,6 @@
 services:
   it-tools:
-    image: corentinth/it-tools:latest
+    image: corentinth/it-tools:nightly
     container_name: it-tools
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
