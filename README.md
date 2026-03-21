@@ -18,13 +18,14 @@ Each folder represents a different service or stack. For example:
 - `invio/` — Invoicing platform
 - `it-tools/` — IT Tools web suite
 - `mealie/` — Mealie recipe manager
-- `papra/` — Receipt management
+- `papra/` — Papra document management
 - `pihole/` — Pi-hole network-wide ad blocker and DNS provider for tailscale clients
 - `plex/` — Plex media server
 - `qbittorrent/` — qBittorrent client
 - `tailscale/` — Tailscale VPN
 - `uptime-kuma/` — Uptime Kuma monitoring
 - `vaultwarden/` — Vaultwarden password manager
+- `unifi/` — Unifi network controller *(docker3 only)*
 - `watchtower/` — Watchtower for automatic container updates
 
 ## Usage
@@ -43,8 +44,12 @@ Each folder represents a different service or stack. For example:
    ```
 
 ## Automation
-- This repository is designed to work with GitHub Actions for CI/CD automation.
-- On push or PR, workflows can be triggered to deploy or update containers in the home lab environment.
+Two GitHub Actions workflows handle deployment:
+
+- **dockerbox** — runs on the `dockerbox` host. Deploys every service that has a `docker-compose.yaml` on every push to `main`.
+- **docker3** — runs on the `docker3` host. Deploys only services with a `docker-compose.docker3.yaml` file (currently `unifi`, `watchtower`, `docker-volume-backup`), triggered on changes to those paths.
+
+Both workflows remove any running containers that are not labelled `managed-by=pipeline`, keeping each host clean.
 
 ## Contributing
 - Update or add new service folders as needed.
