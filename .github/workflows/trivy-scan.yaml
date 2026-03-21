@@ -19,7 +19,7 @@ jobs:
             curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /opt/not-backed-up-volumes
           fi
           echo "/opt/not-backed-up-volumes" >> "$GITHUB_PATH"
-          trivy --version
+          /opt/not-backed-up-volumes/trivy --version
 
       - name: Scan repository (secrets + misconfigurations)
         run: |
