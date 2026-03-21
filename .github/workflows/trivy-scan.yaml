@@ -15,11 +15,10 @@ jobs:
 
       - name: Install Trivy
         run: |
-          if ! command -v trivy &> /dev/null; then
-            mkdir -p "$HOME/.local/bin"
-            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b "$HOME/.local/bin"
-            echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          if ! [ -f /opt/not-backed-up-volumes/trivy ]; then
+            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /opt/not-backed-up-volumes
           fi
+          echo "/opt/not-backed-up-volumes" >> "$GITHUB_PATH"
           trivy --version
 
       - name: Scan repository (secrets + misconfigurations)
