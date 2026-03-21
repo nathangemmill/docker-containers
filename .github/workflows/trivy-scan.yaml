@@ -1,0 +1,67 @@
+name: Trivy Security Scan
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: [self-hosted, linux, x64, dockerbox]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install Trivy
+        run: |
+          if ! command -v trivy &> /dev/null; then
+            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          fi
+          trivy --version
+
+      - name: Scan repository (secrets + misconfigurations)
+        run: |
+          trivy fs . \
+            --scanners secret,misconfig \
+            --severity HIGH,CRITICAL \
+            --format table \
+            --exit-code 0 \
+            --output repo-scan.txt
+
+      - name: Scan container images
+        run: |
+          images=$(grep -h "image:" */docker-compose*.yaml \
+            | sed 's/.*image:[[:space:]]*//' \
+            | sed 's/#.*//' \
+            | tr -d '"' \
+            | tr -d "'" \
+            | sed 's/[[:space:]]*$//' \
+            | grep -v "^$" \
+            | sort -u)
+
+          echo "Images to scan:"
+          echo "$images"
+          > image-scan.txt
+
+          while IFS= read -r image; do
+            [ -z "$image" ] && continue
+            echo "========================================" >> image-scan.txt
+            echo "IMAGE: $image"                           >> image-scan.txt
+            echo "========================================" >> image-scan.txt
+            trivy image \
+              --severity HIGH,CRITICAL \
+              --format table \
+              --exit-code 0 \
+              "$image" >> image-scan.txt 2>&1
+            echo "" >> image-scan.txt
+          done <<< "$images"
+
+      - name: Upload scan reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-scan-${{ github.run_id }}
+          path: |
+            repo-scan.txt
+            image-scan.txt
+          retention-days: 30
