@@ -1,7 +1,7 @@
 services:
   papra:
     build:
-      context: https://github.com/nathangemmill/papra.git#add-notes-field-to-documents
+      context: https://github.com/nathangemmill/papra.git
       dockerfile: packages/app/Dockerfile
     container_name: papra
     restart: unless-stopped
