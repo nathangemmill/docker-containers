@@ -15,6 +15,7 @@ Each folder represents a different service or stack. For example:
 - `caddy/` — Caddy web server and reverse proxy with authelia added authentication provider
 - `cloudflared/` — Cloudflare Tunnels
 - `docker-volume-backup/` — Automated Docker volume backups
+- `ha-mcp/` — Home Assistant MCP server (HTTP mode for Claude Code integration)
 - `invio/` — Invoicing platform
 - `it-tools/` — IT Tools web suite
 - `mealie/` — Mealie recipe manager

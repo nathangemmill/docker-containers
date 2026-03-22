@@ -1,0 +1,14 @@
+services:
+  ha-mcp:
+    image: ghcr.io/homeassistant-ai/ha-mcp:latest
+    container_name: ha-mcp
+    restart: always
+    ports:
+      - "9583:9583"
+    environment:
+      HOMEASSISTANT_URL: ${HOMEASSISTANT_URL}
+      HOMEASSISTANT_TOKEN: ${HOMEASSISTANT_TOKEN}
+    command: fastmcp run fastmcp-http.json
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"

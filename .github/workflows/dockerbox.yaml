@@ -27,6 +27,9 @@ jobs:
       INVIO_ADMIN_USER: ${{secrets.INVIO_ADMIN_USER}}
       INVIO_ADMIN_PASS: ${{secrets.INVIO_ADMIN_PASS}}
       INVIO_JWT_SECRET: ${{secrets.INVIO_JWT_SECRET}}
+      #ha-mcp
+      HOMEASSISTANT_URL: ${{secrets.HOMEASSISTANT_URL}}
+      HOMEASSISTANT_TOKEN: ${{secrets.HOMEASSISTANT_TOKEN}}
       #mealie
       MEALIE_POSTGRES_PASSWORD: ${{secrets.MEALIE_POSTGRES_PASSWORD}}
       #papra
