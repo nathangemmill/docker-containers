@@ -7,6 +7,7 @@ services:
   backend:
     container_name: invio-backend
     image: ghcr.io/kittendevv/invio-backend:latest
+    user: "1000:1000"
 #    env_file:
 #      - .env
     environment:
@@ -27,6 +28,7 @@ services:
   frontend:
     container_name: invio-frontend
     image: ghcr.io/kittendevv/invio-frontend:latest
+    user: "1000:1000"
 #    env_file:
 #      - .env
 #    environment:

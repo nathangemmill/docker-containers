@@ -5,6 +5,7 @@ services:
       dockerfile: packages/app/Dockerfile
     container_name: papra
     restart: unless-stopped
+    user: "1000:1000"
     environment:
       - APP_BASE_URL=https://papra.internal.itgo.com.au
       - AUTH_SECRET=${PAPRA_AUTH_SECRET}

@@ -3,6 +3,7 @@ services:
     container_name: cloudflared-tunnel
     image: cloudflare/cloudflared
     restart: unless-stopped
+    user: "1000:1000"
     networks:
      - caddynet
     command: tunnel run
