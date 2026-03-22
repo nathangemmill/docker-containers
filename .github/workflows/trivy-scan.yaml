@@ -2,12 +2,20 @@ name: Trivy Security Scan
 
 on:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 2 * * 1'  # Weekly on Monday at 2am UTC
   workflow_dispatch:
 
 jobs:
   scan:
     runs-on: [self-hosted, linux, x64, dockerbox]
+
+    env:
+      SMTP_HOST: ${{secrets.SMTP_HOST}}
+      SMTP_PORT: ${{secrets.SMTP_PORT}}
+      SMTP_USER: ${{secrets.SMTP_USER}}
+      SMTP_PASSWORD: ${{secrets.SMTP_PASSWORD}}
+      TRIVY_EMAILS_TO_ADDRESS: ${{secrets.TRIVY_EMAILS_TO_ADDRESS}}
+      TRIVY_EMAILS_FROM_ADDRESS: ${{secrets.TRIVY_EMAILS_FROM_ADDRESS}}
 
     steps:
       - name: Checkout repository
@@ -29,6 +37,13 @@ jobs:
             --format table \
             --exit-code 0 \
             --output repo-scan.txt
+
+          trivy fs . \
+            --scanners secret,misconfig \
+            --severity HIGH,CRITICAL \
+            --format json \
+            --exit-code 0 \
+            --output repo-scan.json
 
       - name: Scan container images
         run: |
@@ -56,10 +71,127 @@ jobs:
               --exit-code 0 \
               "$image" >> image-scan.txt 2>&1
             echo "" >> image-scan.txt
+
+            safe=$(echo "$image" | tr '/: ' '___')
+            trivy image \
+              --severity HIGH,CRITICAL \
+              --format json \
+              --exit-code 0 \
+              --output "img-${safe}.json" \
+              "$image" 2>/dev/null || true
           done <<< "$images"
 
+      - name: Generate summary and send alert
+        run: |
+          python3 << 'PYEOF'
+          import json, smtplib, os, sys, glob
+          from email.mime.multipart import MIMEMultipart
+          from email.mime.text import MIMEText
+          from datetime import datetime
+
+          # --- Parse repo scan ---
+          secrets_count = 0
+          misconfig_count = 0
+          secret_details = []
+          misconfig_details = []
+
+          try:
+              with open('repo-scan.json') as f:
+                  repo_data = json.load(f)
+              for result in repo_data.get('Results', []):
+                  target = result.get('Target', '?')
+                  for s in (result.get('Secrets') or []):
+                      secrets_count += 1
+                      secret_details.append(f"  [{s.get('Severity','?')}] {s.get('Title','?')} in {target}")
+                  for m in (result.get('Misconfigurations') or []):
+                      misconfig_count += 1
+                      misconfig_details.append(f"  [{m.get('Severity','?')}] {m.get('Title','?')} in {target}")
+          except Exception as e:
+              print(f"Repo scan parse error: {e}")
+
+          # --- Parse image scans ---
+          vuln_count = 0
+          vuln_details = []
+
+          for path in sorted(glob.glob('img-*.json')):
+              try:
+                  with open(path) as f:
+                      data = json.load(f)
+                  image_name = data.get('ArtifactName', path)
+                  image_vulns = []
+                  for result in data.get('Results', []):
+                      for v in (result.get('Vulnerabilities') or []):
+                          vuln_count += 1
+                          image_vulns.append(f"    [{v.get('Severity','?')}] {v.get('VulnerabilityID','?')}: {v.get('Title','?')[:80]}")
+                  if image_vulns:
+                      vuln_details.append(f"  {image_name}:")
+                      vuln_details.extend(image_vulns[:5])
+                      if len(image_vulns) > 5:
+                          vuln_details.append(f"    ... and {len(image_vulns) - 5} more")
+              except Exception as e:
+                  print(f"Image scan parse error for {path}: {e}")
+
+          # --- Check thresholds ---
+          should_alert = vuln_count > 0 or secrets_count >= 1 or misconfig_count >= 1
+          print(f"Findings — Vulnerabilities: {vuln_count}, Secrets: {secrets_count}, Misconfigurations: {misconfig_count}")
+
+          if not should_alert:
+              print("All clear — no alert needed.")
+              sys.exit(0)
+
+          # --- Build email body ---
+          date_str = datetime.utcnow().strftime('%Y-%m-%d')
+          subject = f"[Trivy] Security findings detected — {date_str}"
+
+          lines = [
+              f"Trivy weekly scan completed {date_str}.",
+              "",
+              "EXECUTIVE SUMMARY",
+              "=================",
+              f"  Vulnerabilities (HIGH/CRITICAL) : {vuln_count}",
+              f"  Secrets detected                : {secrets_count}",
+              f"  Misconfigurations               : {misconfig_count}",
+              "",
+          ]
+
+          if vuln_count > 0:
+              lines += ["IMAGE VULNERABILITIES (HIGH/CRITICAL)", "-------------------------------------"] + vuln_details + [""]
+
+          if secrets_count > 0:
+              lines += ["SECRETS", "-------"] + secret_details + [""]
+
+          if misconfig_count > 0:
+              lines += ["MISCONFIGURATIONS", "-----------------"] + misconfig_details + [""]
+
+          lines.append("Full reports are available as artifacts in the GitHub Actions workflow run.")
+
+          body = "\n".join(lines)
+          print(body)
+
+          # --- Send email ---
+          smtp_host  = os.environ['SMTP_HOST']
+          smtp_port  = int(os.environ['SMTP_PORT'])
+          smtp_user  = os.environ['SMTP_USER']
+          smtp_pass  = os.environ['SMTP_PASSWORD']
+          from_addr  = os.environ['TRIVY_EMAILS_FROM_ADDRESS']
+          to_addr    = os.environ['TRIVY_EMAILS_TO_ADDRESS']
+
+          msg = MIMEMultipart()
+          msg['From'] = from_addr
+          msg['To'] = to_addr
+          msg['Subject'] = subject
+          msg.attach(MIMEText(body, 'plain'))
+
+          with smtplib.SMTP(smtp_host, smtp_port) as server:
+              server.starttls()
+              server.login(smtp_user, smtp_pass)
+              server.sendmail(from_addr, to_addr, msg.as_string())
+
+          print(f"Alert sent to {to_addr}")
+          PYEOF
+
       - name: Upload scan reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: trivy-scan-${{ github.run_id }}
           path: |
