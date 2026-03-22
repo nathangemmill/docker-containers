@@ -9,4 +9,9 @@ RUN xcaddy build \
 FROM caddy:2
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
-# keep same entrypoint/cmd as official image
+# Grant the binary permission to bind to ports < 1024 without running as root
+RUN apt-get update && apt-get install -y libcap2-bin && \
+    setcap cap_net_bind_service=+ep /usr/bin/caddy && \
+    apt-get remove -y libcap2-bin && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
+
+USER caddy
