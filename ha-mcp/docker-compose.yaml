@@ -4,7 +4,8 @@ services:
     container_name: ha-mcp
     restart: always
     ports:
-      - "9583:9583"
+      - "8086:8086"
+      - "9583:8086"
     environment:
       HOMEASSISTANT_URL: ${HOMEASSISTANT_URL}
       HOMEASSISTANT_TOKEN: ${HOMEASSISTANT_TOKEN}
