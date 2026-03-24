@@ -17,6 +17,7 @@ services:
 #      DATABASE_PATH: ${INVIO_DATABASE_PATH:-/app/data/invio.db}
     volumes:
       - /opt/backed-up-volumes/invio/data:/app/data
+      - /opt/not-backed-up-volumes/invio-cache:/.cache
     restart: unless-stopped
     networks:
       - caddynet
