@@ -1,7 +1,7 @@
 services:
   papra:
     build:
-      context: https://github.com/nathangemmill/papra.git#fix/documents-notes-nullable
+      context: https://github.com/nathangemmill/papra.git
       dockerfile: packages/app/Dockerfile
     container_name: papra
     restart: unless-stopped
