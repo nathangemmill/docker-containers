@@ -28,7 +28,7 @@ services:
       - 80:80
       - 443:443
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:2019/"]
+      test: ["CMD-SHELL", "wget -qSO /dev/null http://localhost:80/ 2>&1 | grep -qE '^  HTTP/'"]
       interval: 30s
       timeout: 10s
       retries: 3
