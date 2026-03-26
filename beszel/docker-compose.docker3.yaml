@@ -1,0 +1,17 @@
+services:
+  beszel-agent:
+    image: henrygd/beszel-agent
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /opt/backed-up-volumes/beszel/beszel_agent_data:/var/lib/beszel-agent
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      LISTEN: 45876
+      HUB_URL: https://bz.itgo.com.au
+      TOKEN: ${BESZEL_DOCKER3_TOKEN}
+      KEY: ${BESZEL_DOCKER3_KEY}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+      - "managed-by=pipeline"
