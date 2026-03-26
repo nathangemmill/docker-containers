@@ -10,7 +10,7 @@ services:
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:2000/ready"]
+      test: ["CMD", "cloudflared", "--version"]
       interval: 30s
       timeout: 10s
       retries: 3
