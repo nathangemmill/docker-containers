@@ -10,6 +10,12 @@ services:
       - /opt/not-backed-up-volumes/beszel/beszel_socket:/beszel_socket
     networks:
       - caddynet
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8090/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
       - "managed-by=pipeline"

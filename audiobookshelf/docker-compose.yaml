@@ -12,6 +12,12 @@ services:
       - /opt/backed-up-volumes/audiobookshelf/metadata:/metadata
     environment:
       - TZ=Australia/Melbourne
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"

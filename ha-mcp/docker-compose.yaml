@@ -10,6 +10,12 @@ services:
       HOMEASSISTANT_URL: ${HOMEASSISTANT_URL}
       HOMEASSISTANT_TOKEN: ${HOMEASSISTANT_TOKEN}
     command: fastmcp run fastmcp-http.json
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8086/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"

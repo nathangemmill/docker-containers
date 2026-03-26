@@ -8,6 +8,12 @@ services:
       - caddynet
     volumes:
       - /opt/backed-up-volumes/uptime-kuma/data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3001/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
