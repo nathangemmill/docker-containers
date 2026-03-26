@@ -21,6 +21,12 @@ services:
     restart: unless-stopped
     networks:
       - caddynet
+    healthcheck:
+      test: ["CMD-SHELL", "deno eval 'const r=await fetch(\"http://localhost:3000/\");Deno.exit(r.status<500?0:1);'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
       - "com.centurylinklabs.watchtower.monitor-only=true"
@@ -36,7 +42,8 @@ services:
 #      PORT: ${FRONTEND_PORT_INTERNAL:-8000}
 #      BACKEND_URL: ${BACKEND_URL:-http://invio-backend:3000}
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: unless-stopped
     networks:
       - caddynet
