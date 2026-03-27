@@ -40,9 +40,9 @@ services:
       - caddynet
     environment:
       - TZ=Australia/Melbourne
-      - DUO_HOSTNAME=${DUO_HOSTNAME}
-      - DUO_INTEGRATION_KEY=${DUO_INTEGRATION_KEY}
-      - DUO_SECRET_KEY=${DUO_SECRET_KEY}
+      - AUTHELIA_DUO_API_HOSTNAME=${DUO_HOSTNAME}
+      - AUTHELIA_DUO_API_INTEGRATION_KEY=${DUO_INTEGRATION_KEY}
+      - AUTHELIA_DUO_API_SECRET_KEY=${DUO_SECRET_KEY}
     volumes:
       - /opt/backed-up-volumes/caddy/authelia:/config
     expose:
