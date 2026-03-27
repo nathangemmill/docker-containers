@@ -16,6 +16,10 @@ jobs:
       BESZEL_ENVIRONMENT_KEY: ${{secrets.BESZEL_ENVIRONMENT_KEY}}
       #caddy
       CADDY_CF_API_TOKEN: ${{secrets.CADDY_CF_API_TOKEN}}
+      AUTHELIA_NOTIFIER_SMTP_SENDER: ${{secrets.AUTHELIA_NOTIFIER_SMTP_SENDER}}
+      AUTHELIA_DUO_API_HOSTNAME: ${{secrets.AUTHELIA_DUO_API_HOSTNAME}}
+      AUTHELIA_DUO_API_INTEGRATION_KEY: ${{secrets.AUTHELIA_DUO_API_INTEGRATION_KEY}}
+      AUTHELIA_DUO_API_SECRET_KEY: ${{secrets.AUTHELIA_DUO_API_SECRET_KEY}}
       #cloudflare tunnel
       CLOUDFLARED_TUNNEL_TOKEN: ${{secrets.CLOUDFLARED_TUNNEL_TOKEN}}
       #docker-volume-backup
@@ -59,6 +63,7 @@ jobs:
               docker compose -f "${dir}docker-compose.yaml" up -d --remove-orphans --build
             fi
           done
+
 
       - name: Remove unmanaged containers
         run: |
