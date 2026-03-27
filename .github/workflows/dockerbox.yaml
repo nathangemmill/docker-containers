@@ -64,6 +64,9 @@ jobs:
             fi
           done
 
+      - name: Force recreate authelia (temporary)
+        run: docker compose -f caddy/docker-compose.yaml up -d --force-recreate authelia
+
       - name: Remove unmanaged containers
         run: |
           docker ps -q | while read id; do
