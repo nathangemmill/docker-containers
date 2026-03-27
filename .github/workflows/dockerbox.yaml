@@ -17,6 +17,9 @@ jobs:
       #caddy
       CADDY_CF_API_TOKEN: ${{secrets.CADDY_CF_API_TOKEN}}
       AUTHELIA_NOTIFIER_SMTP_SENDER: ${{secrets.AUTHELIA_NOTIFIER_SMTP_SENDER}}
+      AUTHELIA_DUO_API_HOSTNAME: ${{secrets.DUO_HOSTNAME}}
+      AUTHELIA_DUO_API_INTEGRATION_KEY: ${{secrets.DUO_INTEGRATION_KEY}}
+      AUTHELIA_DUO_API_SECRET_KEY: ${{secrets.DUO_SECRET_KEY}}
       #cloudflare tunnel
       CLOUDFLARED_TUNNEL_TOKEN: ${{secrets.CLOUDFLARED_TUNNEL_TOKEN}}
       #docker-volume-backup
