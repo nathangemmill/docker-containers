@@ -47,6 +47,10 @@ services:
       - caddynet
     environment:
       - TZ=Australia/Melbourne
+      - AUTHELIA_NOTIFIER_SMTP_ADDRESS=smtp://${SMTP_HOST}:${SMTP_PORT}
+      - AUTHELIA_NOTIFIER_SMTP_USERNAME=${SMTP_USER}
+      - AUTHELIA_NOTIFIER_SMTP_PASSWORD=${SMTP_PASSWORD}
+      - AUTHELIA_NOTIFIER_SMTP_SENDER=${AUTHELIA_NOTIFIER_SMTP_SENDER}
     volumes:
       - /opt/backed-up-volumes/caddy/authelia:/config
     expose:

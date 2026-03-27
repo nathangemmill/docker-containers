@@ -16,6 +16,7 @@ jobs:
       BESZEL_ENVIRONMENT_KEY: ${{secrets.BESZEL_ENVIRONMENT_KEY}}
       #caddy
       CADDY_CF_API_TOKEN: ${{secrets.CADDY_CF_API_TOKEN}}
+      AUTHELIA_NOTIFIER_SMTP_SENDER: ${{secrets.AUTHELIA_NOTIFIER_SMTP_SENDER}}
       #cloudflare tunnel
       CLOUDFLARED_TUNNEL_TOKEN: ${{secrets.CLOUDFLARED_TUNNEL_TOKEN}}
       #docker-volume-backup
