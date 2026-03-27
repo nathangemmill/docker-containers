@@ -64,15 +64,6 @@ jobs:
             fi
           done
 
-      - name: Debug authelia env vars (temporary)
-        run: |
-          echo "AUTHELIA_DUO_API_HOSTNAME set: $([ -n "$AUTHELIA_DUO_API_HOSTNAME" ] && echo yes || echo NO)"
-          echo "AUTHELIA_DUO_API_INTEGRATION_KEY set: $([ -n "$AUTHELIA_DUO_API_INTEGRATION_KEY" ] && echo yes || echo NO)"
-          echo "AUTHELIA_DUO_API_SECRET_KEY set: $([ -n "$AUTHELIA_DUO_API_SECRET_KEY" ] && echo yes || echo NO)"
-          docker compose -f caddy/docker-compose.yaml config | grep -i duo
-
-      - name: Force recreate authelia (temporary)
-        run: docker compose -f caddy/docker-compose.yaml up -d --force-recreate authelia
 
       - name: Remove unmanaged containers
         run: |
