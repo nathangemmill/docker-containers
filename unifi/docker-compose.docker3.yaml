@@ -5,6 +5,8 @@ services:
     init: true
     restart: unless-stopped
     user: unifi
+    security_opt:
+      - no-new-privileges:true
     environment:
       TZ: Australia/Melbourne
       SYSTEM_IP: 45.76.122.187

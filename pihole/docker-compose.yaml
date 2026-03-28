@@ -19,6 +19,8 @@ services:
       - NET_ADMIN   # required if using Pi-hole DHCP, otherwise optional
       - SYS_TIME    # required if Pi-hole should set host time (NTP)
       - SYS_NICE    # optional
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "dig", "+short", "+norecurse", "+retry=0", "@127.0.0.1", "pi.hole"]

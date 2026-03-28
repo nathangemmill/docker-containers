@@ -6,6 +6,8 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
+    security_opt:
+      - no-new-privileges:true
     network_mode: "host"
     volumes:
       - /opt/backed-up-volumes/tailscale/tailscale-state:/var/lib/tailscale

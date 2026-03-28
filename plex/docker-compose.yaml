@@ -3,6 +3,8 @@ services:
     image: plexinc/pms-docker
     container_name: plex
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     networks:
       - caddynet
     environment:
