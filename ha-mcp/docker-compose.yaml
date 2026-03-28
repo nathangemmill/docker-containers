@@ -9,6 +9,11 @@ services:
     environment:
       HOMEASSISTANT_URL: ${HOMEASSISTANT_URL}
       HOMEASSISTANT_TOKEN: ${HOMEASSISTANT_TOKEN}
+    user: "1000:1000"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     command: fastmcp run fastmcp-http.json
     healthcheck:
       test: ["CMD-SHELL", "python3 -c \"import socket;s=socket.socket();s.settimeout(5);s.connect(('127.0.0.1',8086));s.close()\""]

@@ -4,6 +4,8 @@ services:
     container_name: vaultwarden
     restart: always
     user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
     networks:
       - caddynet
     environment:

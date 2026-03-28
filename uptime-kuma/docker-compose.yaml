@@ -1,9 +1,10 @@
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:2
+    image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
     restart: unless-stopped
-    user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
     networks:
       - caddynet
     volumes:

@@ -5,6 +5,8 @@ services:
     dns:
       - 1.1.1.1
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
 #    env_file: ./backup.env
     environment:
       # Azure

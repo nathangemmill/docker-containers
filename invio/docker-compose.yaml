@@ -8,6 +8,8 @@ services:
     container_name: invio-backend
     image: ghcr.io/kittendevv/invio-backend:latest
     user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
 #    env_file:
 #      - .env
     environment:
@@ -36,6 +38,8 @@ services:
     container_name: invio-frontend
     image: ghcr.io/kittendevv/invio-frontend:latest
     user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
 #    env_file:
 #      - .env
 #    environment:
