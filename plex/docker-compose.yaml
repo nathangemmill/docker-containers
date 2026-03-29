@@ -6,7 +6,7 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - caddynet
+      - plex_net
     environment:
       - TZ=Australia/Melbourne  # Change to your time zone
       - PLEX_CLAIM=claim-${PLEX_CLAIM}           # Optional: for linking to your Plex account
@@ -25,6 +25,6 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 networks:
-  caddynet:
+  plex_net:
     external: true
-    name: caddynet
+    name: plex_net

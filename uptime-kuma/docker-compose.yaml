@@ -6,7 +6,7 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - caddynet
+      - uptime_kuma_net
     volumes:
       - /opt/backed-up-volumes/uptime-kuma/data:/app/data
     healthcheck:
@@ -19,6 +19,6 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 networks:
-  caddynet:
+  uptime_kuma_net:
     external: true
-    name: caddynet
+    name: uptime_kuma_net

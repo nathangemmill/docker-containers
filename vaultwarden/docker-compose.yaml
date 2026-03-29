@@ -7,7 +7,7 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - caddynet
+      - vaultwarden_net
     environment:
       DOMAIN: "https://bw.itgo.com.au"  # required when using a reverse proxy; your domain; vaultwarden needs to know it's https to work properly with attachments
       SIGNUPS_ALLOWED: "false" # Deactivate this with "false" after you have created your account so that no strangers can register
@@ -33,6 +33,6 @@ services:
 #    ports:
 #      - 11001:80 # you can replace the 11001 with your preferred port
 networks:
-  caddynet:
+  vaultwarden_net:
     external: true
-    name: caddynet
+    name: vaultwarden_net
