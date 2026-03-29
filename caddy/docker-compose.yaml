@@ -13,6 +13,17 @@ services:
       - NET_BIND_SERVICE
     networks:
       - caddynet
+      - cloudflared_net
+      - audiobookshelf_net
+      - beszel_net
+      - invio_net
+      - it_tools_net
+      - mealie_net
+      - papra_net
+      - plex_net
+      - qbittorrent_net
+      - uptime_kuma_net
+      - vaultwarden_net
     environment:
       # put your Cloudflare token in a .env file (see .env.example below)
       - CF_API_TOKEN=${CADDY_CF_API_TOKEN}
@@ -81,3 +92,36 @@ networks:
     external: true
     driver: bridge
     name: caddynet
+  cloudflared_net:
+    external: true
+    name: cloudflared_net
+  audiobookshelf_net:
+    external: true
+    name: audiobookshelf_net
+  beszel_net:
+    external: true
+    name: beszel_net
+  invio_net:
+    external: true
+    name: invio_net
+  it_tools_net:
+    external: true
+    name: it_tools_net
+  mealie_net:
+    external: true
+    name: mealie_net
+  papra_net:
+    external: true
+    name: papra_net
+  plex_net:
+    external: true
+    name: plex_net
+  qbittorrent_net:
+    external: true
+    name: qbittorrent_net
+  uptime_kuma_net:
+    external: true
+    name: uptime_kuma_net
+  vaultwarden_net:
+    external: true
+    name: vaultwarden_net

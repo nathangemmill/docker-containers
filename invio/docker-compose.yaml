@@ -1,7 +1,7 @@
 networks:
-  caddynet:
+  invio_net:
     external: true
-    name: caddynet
+    name: invio_net
 
 services:
   backend:
@@ -22,7 +22,7 @@ services:
       - /opt/not-backed-up-volumes/invio-cache:/.cache
     restart: unless-stopped
     networks:
-      - caddynet
+      - invio_net
     healthcheck:
       test: ["CMD-SHELL", "deno eval 'const r=await fetch(\"http://localhost:3000/\");Deno.exit(r.status<500?0:1);'"]
       interval: 30s
@@ -50,7 +50,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     networks:
-      - caddynet
+      - invio_net
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
       - "com.centurylinklabs.watchtower.monitor-only=true"

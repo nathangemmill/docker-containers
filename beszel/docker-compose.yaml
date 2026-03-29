@@ -11,7 +11,7 @@ services:
       - /opt/backed-up-volumes/beszel/beszel_data:/beszel_data
       - /opt/not-backed-up-volumes/beszel/beszel_socket:/beszel_socket
     networks:
-      - caddynet
+      - beszel_net
     healthcheck:
       test: ["CMD", "/beszel", "--version"]
       interval: 30s
@@ -43,6 +43,6 @@ services:
       - "managed-by=pipeline"
 
 networks:
-  caddynet:
+  beszel_net:
     external: true
-    name: caddynet
+    name: beszel_net

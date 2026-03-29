@@ -23,12 +23,12 @@ services:
     volumes:
       - /opt/backed-up-volumes/papra/data:/app/app-data
     networks:
-      - caddynet
+      - papra_net
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 
 networks:
-  caddynet:
+  papra_net:
     external: true
-    name: caddynet
+    name: papra_net

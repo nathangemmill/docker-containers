@@ -8,10 +8,10 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
     networks:
-      - caddynet
+      - it_tools_net
     restart: unless-stopped
 
 networks:
-  caddynet:
+  it_tools_net:
     external: true
-    name: caddynet
+    name: it_tools_net

@@ -7,7 +7,7 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-     - caddynet
+      - cloudflared_net
     command: tunnel --metrics localhost:2000 run
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
@@ -21,6 +21,6 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 networks:
-  caddynet:
+  cloudflared_net:
     external: true
-    name: caddynet
+    name: cloudflared_net

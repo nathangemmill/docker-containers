@@ -3,7 +3,7 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     networks:
-      - caddynet
+      - qbittorrent_net
     environment:
       - PUID=1000
       - PGID=1000
@@ -20,6 +20,6 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 networks:
-  caddynet:
+  qbittorrent_net:
     external: true
-    name: caddynet
+    name: qbittorrent_net
