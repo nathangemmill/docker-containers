@@ -8,7 +8,6 @@ services:
       - no-new-privileges:true
     networks:
       - campbell_net
-      - caddy_net
     volumes:
       - /opt/backed-up-volumes/campbell/data:/app/data
     environment:
@@ -37,6 +36,3 @@ networks:
   campbell_net:
     external: true
     name: campbell_net
-  caddy_net:
-    external: true
-    name: caddy_net
