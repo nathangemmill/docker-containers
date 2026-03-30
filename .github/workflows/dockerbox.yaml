@@ -50,6 +50,11 @@ jobs:
       SMTP_PASSWORD: ${{secrets.SMTP_PASSWORD}}
       #watchtower
       WATCHTOWER_NOTIFICATION_URL: ${{secrets.WATCHTOWER_NOTIFICATION_URL}}
+      #campbellsfamilycare
+      CAMPBELLS_GH_TOKEN: ${{secrets.CAMPBELLS_GH_TOKEN}}
+      CAMPBELLS_TURNSTILE_SECRET_KEY: ${{secrets.CAMPBELLS_TURNSTILE_SECRET_KEY}}
+      CAMPBELLS_ADMIN_EMAIL: ${{secrets.CAMPBELLS_ADMIN_EMAIL}}
+      CAMPBELLS_ADMIN_PASSWORD: ${{secrets.CAMPBELLS_ADMIN_PASSWORD}}
 
     steps:
       - name: Checkout repository
@@ -57,7 +62,7 @@ jobs:
 
       - name: Create service networks
         run: |
-          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net invio_net it_tools_net mealie_net mealie_internal papra_net plex_net qbittorrent_net uptime_kuma_net vaultwarden_net; do
+          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net invio_net it_tools_net mealie_net mealie_internal papra_net plex_net qbittorrent_net uptime_kuma_net vaultwarden_net; do
             docker network create --driver bridge $net || true
           done
 
