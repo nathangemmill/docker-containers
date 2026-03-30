@@ -5,6 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      redeploy_campbells:
+        description: 'Force redeploy campbellsfamilycare'
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -72,6 +77,10 @@ jobs:
             if [ -f "${dir}docker-compose.yaml" ]; then
               echo ">>> Deploying ${dir}"
               if [ "$dir" = "campbellsfamilycare/" ]; then
+                if docker ps --format '{{.Names}}' | grep -q '^campbellsfamilycare$' && [ "${{ inputs.redeploy_campbells }}" != "true" ]; then
+                  echo ">>> Skipping campbellsfamilycare (already running)"
+                  continue
+                fi
                 docker compose -f "${dir}docker-compose.yaml" build --no-cache
               fi
               docker compose -f "${dir}docker-compose.yaml" up -d --remove-orphans --build
