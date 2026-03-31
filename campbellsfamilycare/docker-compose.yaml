@@ -1,7 +1,7 @@
 services:
   campbellsfamilycare:
     build:
-      context: "https://x-access-token:${CAMPBELLS_GH_TOKEN}@github.com/nathangemmill/campbellsfamilycare.git#security-hardening"
+      context: "https://x-access-token:${CAMPBELLS_GH_TOKEN}@github.com/nathangemmill/campbellsfamilycare.git"
     container_name: campbellsfamilycare
     restart: unless-stopped
     security_opt:
