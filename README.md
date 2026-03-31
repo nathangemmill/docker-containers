@@ -11,7 +11,7 @@ This repository is a collection of Docker Compose files for managing and deployi
 Each folder represents a different service or stack. For example:
 
 - `audiobookshelf/` — Audiobook server
-- `beszel/` — Container/performance monitoring
+- `beszel/` — Container/performance monitoring *(also docker3)*
 - `caddy/` — Caddy web server and reverse proxy with authelia added authentication provider
 - `cloudflared/` — Cloudflare Tunnels
 - `docker-volume-backup/` — Automated Docker volume backups
@@ -48,7 +48,7 @@ Each folder represents a different service or stack. For example:
 Two GitHub Actions workflows handle deployment:
 
 - **dockerbox** — runs on the `dockerbox` host. Deploys every service that has a `docker-compose.yaml` on every push to `main`.
-- **docker3** — runs on the `docker3` host. Deploys only services with a `docker-compose.docker3.yaml` file (currently `unifi`, `watchtower`, `docker-volume-backup`), triggered on changes to those paths.
+- **docker3** — runs on the `docker3` host. Deploys only services with a `docker-compose.docker3.yaml` file (currently `unifi`, `watchtower`, `docker-volume-backup`, `beszel`), triggered on changes to those paths.
 
 Both workflows remove any running containers that are not labelled `managed-by=pipeline`, keeping each host clean.
 

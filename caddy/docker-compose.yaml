@@ -16,6 +16,7 @@ services:
       - cloudflared_net
       - audiobookshelf_net
       - beszel_net
+      - campbell_net
       - invio_net
       - it_tools_net
       - mealie_net
@@ -101,6 +102,9 @@ networks:
   beszel_net:
     external: true
     name: beszel_net
+  campbell_net:
+    external: true
+    name: campbell_net
   invio_net:
     external: true
     name: invio_net

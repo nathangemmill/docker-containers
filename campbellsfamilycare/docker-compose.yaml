@@ -1,0 +1,38 @@
+services:
+  campbellsfamilycare:
+    build:
+      context: "https://x-access-token:${CAMPBELLS_GH_TOKEN}@github.com/nathangemmill/campbellsfamilycare.git#security-hardening"
+    container_name: campbellsfamilycare
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - campbell_net
+    volumes:
+      - /opt/backed-up-volumes/campbell/data:/app/data
+    environment:
+      - PORT=3000
+      - TURNSTILE_SECRET_KEY=${CAMPBELLS_TURNSTILE_SECRET_KEY}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=false
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASSWORD}
+      - SMTP_FROM=${SMTP_USER}
+      - ADMIN_EMAIL=${CAMPBELLS_ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${CAMPBELLS_ADMIN_PASSWORD}
+    expose:
+      - 3000
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "managed-by=pipeline"
+
+networks:
+  campbell_net:
+    external: true
+    name: campbell_net
