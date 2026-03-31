@@ -16,16 +16,18 @@ jobs:
       SMTP_PASSWORD: ${{secrets.SMTP_PASSWORD}}
       TRIVY_EMAILS_TO_ADDRESS: ${{secrets.TRIVY_EMAILS_TO_ADDRESS}}
       TRIVY_EMAILS_FROM_ADDRESS: ${{secrets.TRIVY_EMAILS_FROM_ADDRESS}}
+      TRIVY_VERSION: "0.69.3"  # last known-safe release before 2026-03-19 supply chain compromise
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install Trivy
+      - name: Install Trivy (pinned)
         run: |
-          if ! [ -f /opt/not-backed-up-volumes/trivy ]; then
-            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /opt/not-backed-up-volumes
-          fi
+          curl -sL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz" \
+            -o /tmp/trivy.tar.gz
+          tar -xzf /tmp/trivy.tar.gz -C /opt/not-backed-up-volumes trivy
+          rm /tmp/trivy.tar.gz
           echo "/opt/not-backed-up-volumes" >> "$GITHUB_PATH"
           /opt/not-backed-up-volumes/trivy --version
 
@@ -191,7 +193,7 @@ jobs:
           PYEOF
 
       - name: Upload scan reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: trivy-scan-${{ github.run_id }}
           path: |

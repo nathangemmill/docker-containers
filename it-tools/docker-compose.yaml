@@ -1,6 +1,6 @@
 services:
   it-tools:
-    image: corentinth/it-tools:nightly
+    image: corentinth/it-tools:latest
     container_name: it-tools
     security_opt:
       - no-new-privileges:true
