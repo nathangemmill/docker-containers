@@ -21,7 +21,6 @@ Each folder represents a different service or stack. For example:
 - `mealie/` — Mealie recipe manager
 - `papra/` — Papra document management
 - `pihole/` — Pi-hole network-wide ad blocker and DNS provider for tailscale clients
-- `plex/` — Plex media server
 - `qbittorrent/` — qBittorrent client
 - `tailscale/` — Tailscale VPN
 - `uptime-kuma/` — Uptime Kuma monitoring
