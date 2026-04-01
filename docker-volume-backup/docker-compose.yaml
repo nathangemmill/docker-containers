@@ -38,7 +38,6 @@ services:
 #      - /home/nathangemmill/mealie/mealie-pgdata:/backup/mealie-pgdata:ro
 #      - /home/nathangemmill/arr-stack/data:/backup/arr-stack-data:ro
 #      - /home/nathangemmill/iSponsorBlockTV:/backup/iSponsorBlockTV:ro
-      - /home/nathangemmill/plex/config:/backup/plex-config:ro
 #      - /home/nathangemmill/caddy/caddy_data:/backup/caddy-data:ro
 #      - /home/nathangemmill/caddy/caddy_config:/backup/caddy-config:ro
 #      - /home/nathangemmill/caddy/conf:/backup/caddy-conf:ro

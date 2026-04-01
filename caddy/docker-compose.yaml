@@ -21,7 +21,6 @@ services:
       - it_tools_net
       - mealie_net
       - papra_net
-      - plex_net
       - qbittorrent_net
       - uptime_kuma_net
       - vaultwarden_net
@@ -117,9 +116,6 @@ networks:
   papra_net:
     external: true
     name: papra_net
-  plex_net:
-    external: true
-    name: plex_net
   qbittorrent_net:
     external: true
     name: qbittorrent_net
