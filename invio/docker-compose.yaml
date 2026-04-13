@@ -8,8 +8,9 @@ services:
     container_name: invio-backend
     image: ghcr.io/kittendevv/invio-backend:latest
     user: "1000:1000"
-    security_opt:
-      - no-new-privileges:true
+    cap_add:
+      - SYS_ADMIN
+    shm_size: '256m'
 #    env_file:
 #      - .env
     environment:
