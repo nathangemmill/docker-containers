@@ -8,8 +8,8 @@ services:
     container_name: invio-backend
     image: ghcr.io/kittendevv/invio-backend:latest
     user: "1000:1000"
-    cap_add:
-      - SYS_ADMIN
+    security_opt:
+      - no-new-privileges:true
     shm_size: '256m'
 #    env_file:
 #      - .env
@@ -31,8 +31,7 @@ services:
       retries: 3
       start_period: 30s
     labels:
-      - "com.centurylinklabs.watchtower.enable=false"
-      - "com.centurylinklabs.watchtower.monitor-only=true"
+      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 
   frontend:
@@ -53,6 +52,5 @@ services:
     networks:
       - invio_net
     labels:
-      - "com.centurylinklabs.watchtower.enable=false"
-      - "com.centurylinklabs.watchtower.monitor-only=true"
+      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
