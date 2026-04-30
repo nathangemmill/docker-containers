@@ -20,7 +20,6 @@ services:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_NOTIFICATIONS=shoutrrr
       - WATCHTOWER_NOTIFICATION_URL=pushover://shoutrrr:${WATCHTOWER_NOTIFICATION_URL}/
-      - WATCHTOWER_NOTIFICATION_REPORT=true
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
       - "managed-by=pipeline"
