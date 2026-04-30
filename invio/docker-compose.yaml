@@ -42,9 +42,9 @@ services:
       - no-new-privileges:true
 #    env_file:
 #      - .env
-#    environment:
+    environment:
 #      PORT: ${FRONTEND_PORT_INTERNAL:-8000}
-#      BACKEND_URL: ${BACKEND_URL:-http://invio-backend:3000}
+      BACKEND_URL: ${BACKEND_URL:-http://invio-backend:3000}
     depends_on:
       backend:
         condition: service_healthy
