@@ -18,6 +18,7 @@ Each folder represents a different service or stack. For example:
 - `ha-mcp/` — Home Assistant MCP server (HTTP mode for Claude Code integration)
 - `invio/` — Invoicing platform
 - `it-tools/` — IT Tools web suite
+- `itgo-website/` — IT Go website (itgo.com.au)
 - `mealie/` — Mealie recipe manager
 - `papra/` — Papra document management
 - `pihole/` — Pi-hole network-wide ad blocker and DNS provider for tailscale clients

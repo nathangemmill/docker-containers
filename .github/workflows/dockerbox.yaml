@@ -10,6 +10,10 @@ on:
         description: 'Force redeploy campbellsfamilycare'
         type: boolean
         default: false
+      redeploy_itgo:
+        description: 'Force redeploy itgo-website'
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -61,6 +65,12 @@ jobs:
       CAMPBELLS_SMTP2GO_HOST: ${{secrets.CAMPBELLS_SMTP2GO_HOST}}
       CAMPBELLS_SMTP2GO_USER: ${{secrets.CAMPBELLS_SMTP2GO_USER}}
       CAMPBELLS_SMTP2GO_PASSWORD: ${{secrets.CAMPBELLS_SMTP2GO_PASSWORD}}
+      #itgo-website
+      ITGO_GH_TOKEN: ${{secrets.ITGO_GH_TOKEN}}
+      ITGO_TURNSTILE_SITE_KEY: ${{secrets.ITGO_TURNSTILE_SITE_KEY}}
+      ITGO_TURNSTILE_SECRET_KEY: ${{secrets.ITGO_TURNSTILE_SECRET_KEY}}
+      ITGO_ADMIN_EMAIL: ${{secrets.ITGO_ADMIN_EMAIL}}
+      ITGO_ADMIN_PASSWORD: ${{secrets.ITGO_ADMIN_PASSWORD}}
 
     steps:
       - name: Checkout repository
@@ -68,7 +78,7 @@ jobs:
 
       - name: Create service networks
         run: |
-          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net invio_net it_tools_net mealie_net mealie_internal papra_netqbittorrent_net uptime_kuma_net vaultwarden_net; do
+          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net itgo_net invio_net it_tools_net mealie_net mealie_internal papra_net qbittorrent_net uptime_kuma_net vaultwarden_net; do
             docker network create --driver bridge $net || true
           done
 
@@ -80,6 +90,13 @@ jobs:
               if [ "$dir" = "campbellsfamilycare/" ]; then
                 if docker ps --format '{{.Names}}' | grep -q '^campbellsfamilycare$' && [ "${{ inputs.redeploy_campbells }}" != "true" ]; then
                   echo ">>> Skipping campbellsfamilycare (already running)"
+                  continue
+                fi
+                docker compose -f "${dir}docker-compose.yaml" build --no-cache
+              fi
+              if [ "$dir" = "itgo-website/" ]; then
+                if docker ps --format '{{.Names}}' | grep -q '^itgo-website$' && [ "${{ inputs.redeploy_itgo }}" != "true" ]; then
+                  echo ">>> Skipping itgo-website (already running)"
                   continue
                 fi
                 docker compose -f "${dir}docker-compose.yaml" build --no-cache
