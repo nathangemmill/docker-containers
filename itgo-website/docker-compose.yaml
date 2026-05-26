@@ -1,7 +1,7 @@
 services:
   itgo-website:
     build:
-      context: "https://x-access-token:${ITGO_GH_TOKEN}@github.com/nathangemmill/itgo-website.git"
+      context: "https://x-access-token:${ITGO_GH_TOKEN}@github.com/nathangemmill/itgo-website.git#fix/style-and-ui-polish"
       args:
         NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${ITGO_TURNSTILE_SITE_KEY}
     container_name: itgo-website
