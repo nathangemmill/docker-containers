@@ -1,7 +1,7 @@
 services:
   itgo-website:
     build:
-      context: "https://x-access-token:${ITGO_GH_TOKEN}@github.com/nathangemmill/itgo-website.git"
+      context: "https://x-access-token:${ITGO_GH_TOKEN}@github.com/nathangemmill/itgo-website.git#main"
       args:
         NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${ITGO_TURNSTILE_SITE_KEY}
     container_name: itgo-website
@@ -20,7 +20,7 @@ services:
       - SMTP_SECURE=false
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASS=${SMTP_PASSWORD}
-      - SMTP_FROM=${SMTP_USER}
+      - SMTP_FROM=${ITGO_EMAILS_FROM_ADDRESS}
       - ADMIN_EMAIL=${ITGO_ADMIN_EMAIL}
       - ADMIN_PASSWORD=${ITGO_ADMIN_PASSWORD}
     expose:
