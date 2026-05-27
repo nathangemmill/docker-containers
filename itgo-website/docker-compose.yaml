@@ -20,7 +20,7 @@ services:
       - SMTP_SECURE=false
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASS=${SMTP_PASSWORD}
-      - SMTP_FROM=${SMTP_USER}
+      - SMTP_FROM=${ITGO_EMAILS_FROM_ADDRESS}
       - ADMIN_EMAIL=${ITGO_ADMIN_EMAIL}
       - ADMIN_PASSWORD=${ITGO_ADMIN_PASSWORD}
     expose:

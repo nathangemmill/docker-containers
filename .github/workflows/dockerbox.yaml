@@ -71,6 +71,7 @@ jobs:
       ITGO_TURNSTILE_SECRET_KEY: ${{secrets.ITGO_TURNSTILE_SECRET_KEY}}
       ITGO_ADMIN_EMAIL: ${{secrets.ITGO_ADMIN_EMAIL}}
       ITGO_ADMIN_PASSWORD: ${{secrets.ITGO_ADMIN_PASSWORD}}
+      ITGO_EMAILS_FROM_ADDRESS: ${{secrets.ITGO_EMAILS_FROM_ADDRESS}}
 
     steps:
       - name: Checkout repository
