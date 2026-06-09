@@ -1,0 +1,23 @@
+networks:
+  dockhand_net:
+    external: true
+    name: dockhand_net
+
+services:
+  dockhand:
+    image: fnsys/dockhand:latest
+    container_name: dockhand
+    restart: unless-stopped
+#    user: "1000:1000"
+#    security_opt:
+#      - no-new-privileges:true
+#    ports:
+#      - 3000:3000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/backed-up-volumes/dockhand/data:/app/data
+    networks:
+      - dockhand_net
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "managed-by=pipeline"

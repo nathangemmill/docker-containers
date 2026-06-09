@@ -80,7 +80,7 @@ jobs:
 
       - name: Create service networks
         run: |
-          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net itgo_net invio_net it_tools_net mealie_net mealie_internal papra_net qbittorrent_net uptime_kuma_net vaultwarden_net; do
+          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net dockhand_net itgo_net invio_net it_tools_net mealie_net mealie_internal papra_net qbittorrent_net uptime_kuma_net vaultwarden_net; do
             docker network create --driver bridge $net || true
           done
 
