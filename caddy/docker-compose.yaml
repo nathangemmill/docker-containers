@@ -14,6 +14,7 @@ services:
     networks:
       - caddy_net
       - cloudflared_net
+      - dockhand_net
       - audiobookshelf_net
       - beszel_net
       - campbell_net
@@ -96,6 +97,9 @@ networks:
   cloudflared_net:
     external: true
     name: cloudflared_net
+  dockhand_net:
+    external: true
+    name: dockhand_net
   audiobookshelf_net:
     external: true
     name: audiobookshelf_net
