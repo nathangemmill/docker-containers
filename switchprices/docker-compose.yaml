@@ -1,0 +1,117 @@
+services:
+  switchprices-postgres:
+    container_name: switchprices-postgres
+    image: postgres:16-alpine
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - switchprices_internal
+    volumes:
+      - /opt/backed-up-volumes/switchprices/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: switchprices
+      POSTGRES_PASSWORD: ${SWITCHPRICES_POSTGRES_PASSWORD}
+      PGUSER: switchprices
+      POSTGRES_DB: switchprices
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    labels:
+      - "managed-by=pipeline"
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  switchprices-backend:
+    container_name: switchprices-backend
+    build:
+      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#main"
+      dockerfile: switchprices/backend/Dockerfile
+    restart: unless-stopped
+    user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - switchprices_net
+      - switchprices_internal
+    expose:
+      - "8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://switchprices:${SWITCHPRICES_POSTGRES_PASSWORD}@switchprices-postgres:5432/switchprices
+      - SECRET_KEY=${SWITCHPRICES_SECRET_KEY}
+    depends_on:
+      switchprices-postgres:
+        condition: service_healthy
+    command: ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    labels:
+      - "managed-by=pipeline"
+      - "com.centurylinklabs.watchtower.enable=false"
+
+  switchprices-frontend:
+    container_name: switchprices-frontend
+    build:
+      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#main"
+      dockerfile: switchprices/frontend/Dockerfile
+    restart: unless-stopped
+    user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - switchprices_net
+    expose:
+      - "3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    labels:
+      - "managed-by=pipeline"
+      - "com.centurylinklabs.watchtower.enable=false"
+
+  switchprices-scraper:
+    container_name: switchprices-scraper
+    build:
+      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#main"
+      dockerfile: switchprices/scraper/Dockerfile
+    restart: unless-stopped
+    user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - switchprices_internal
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://switchprices:${SWITCHPRICES_POSTGRES_PASSWORD}@switchprices-postgres:5432/switchprices
+    depends_on:
+      switchprices-postgres:
+        condition: service_healthy
+      switchprices-backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "app.main"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "managed-by=pipeline"
+      - "com.centurylinklabs.watchtower.enable=false"
+
+networks:
+  switchprices_net:
+    external: true
+    name: switchprices_net
+  switchprices_internal:
+    external: true
+    name: switchprices_internal
