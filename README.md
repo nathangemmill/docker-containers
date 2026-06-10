@@ -24,6 +24,7 @@ Each folder represents a different service or stack. For example:
 - `papra/` — Papra document management
 - `pihole/` — Pi-hole network-wide ad blocker and DNS provider for tailscale clients
 - `qbittorrent/` — qBittorrent client
+- `switchprices/` — SwitchPrices Australian network switch price comparison site (switchprices.com.au)
 - `tailscale/` — Tailscale VPN
 - `uptime-kuma/` — Uptime Kuma monitoring
 - `vaultwarden/` — Vaultwarden password manager

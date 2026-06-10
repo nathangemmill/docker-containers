@@ -14,6 +14,10 @@ on:
         description: 'Force redeploy itgo-website'
         type: boolean
         default: false
+      redeploy_switchprices:
+        description: 'Force redeploy switchprices'
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -73,6 +77,10 @@ jobs:
       ITGO_ADMIN_EMAIL: ${{secrets.ITGO_ADMIN_EMAIL}}
       ITGO_ADMIN_PASSWORD: ${{secrets.ITGO_ADMIN_PASSWORD}}
       ITGO_EMAILS_FROM_ADDRESS: ${{secrets.ITGO_EMAILS_FROM_ADDRESS}}
+      #switchprices
+      SWITCHPRICES_GH_TOKEN: ${{secrets.SWITCHPRICES_GH_TOKEN}}
+      SWITCHPRICES_POSTGRES_PASSWORD: ${{secrets.SWITCHPRICES_POSTGRES_PASSWORD}}
+      SWITCHPRICES_SECRET_KEY: ${{secrets.SWITCHPRICES_SECRET_KEY}}
 
     steps:
       - name: Checkout repository
@@ -80,7 +88,7 @@ jobs:
 
       - name: Create service networks
         run: |
-          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net dockhand_net itgo_net invio_net it_tools_net mealie_net mealie_internal papra_net qbittorrent_net uptime_kuma_net vaultwarden_net; do
+          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net dockhand_net itgo_net invio_net it_tools_net mealie_net mealie_internal papra_net qbittorrent_net uptime_kuma_net vaultwarden_net switchprices_net switchprices_internal; do
             docker network create --driver bridge $net || true
           done
 
@@ -99,6 +107,13 @@ jobs:
               if [ "$dir" = "itgo-website/" ]; then
                 if docker ps --format '{{.Names}}' | grep -q '^itgo-website$' && [ "${{ inputs.redeploy_itgo }}" != "true" ]; then
                   echo ">>> Skipping itgo-website (already running)"
+                  continue
+                fi
+                docker compose -f "${dir}docker-compose.yaml" build --no-cache
+              fi
+              if [ "$dir" = "switchprices/" ]; then
+                if docker ps --format '{{.Names}}' | grep -q '^switchprices-backend$' && [ "${{ inputs.redeploy_switchprices }}" != "true" ]; then
+                  echo ">>> Skipping switchprices (already running)"
                   continue
                 fi
                 docker compose -f "${dir}docker-compose.yaml" build --no-cache
