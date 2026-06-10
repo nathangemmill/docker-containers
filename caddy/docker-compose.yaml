@@ -24,6 +24,7 @@ services:
       - mealie_net
       - papra_net
       - qbittorrent_net
+      - switchprices_net
       - uptime_kuma_net
       - vaultwarden_net
     environment:
@@ -127,6 +128,9 @@ networks:
   qbittorrent_net:
     external: true
     name: qbittorrent_net
+  switchprices_net:
+    external: true
+    name: switchprices_net
   uptime_kuma_net:
     external: true
     name: uptime_kuma_net
