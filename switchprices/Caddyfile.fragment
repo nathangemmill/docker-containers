@@ -6,10 +6,19 @@
 # 'handle_path' strips the /api/ prefix before forwarding, causing FastAPI to
 # receive /health instead of /api/health and returning 404.
 #
+# /admin* is gated by Authelia forward_auth (import authelia inside handle /admin*).
+# Unauthenticated requests to /admin* are redirected to the Authelia login page.
+# After updating this fragment on dockerbox, re-apply and reload Caddy (see command above).
+#
 # Domain: switchprices.com.au (confirm CNAME matches before applying)
 
 switchprices.com.au {
     encode gzip
+
+    handle /admin* {
+        import authelia
+        reverse_proxy switchprices-backend:8000
+    }
 
     handle /api/* {
         reverse_proxy switchprices-backend:8000
