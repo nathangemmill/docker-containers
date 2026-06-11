@@ -26,7 +26,7 @@ services:
   switchprices-backend:
     container_name: switchprices-backend
     build:
-      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#main"
+      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#master"
       dockerfile: switchprices/backend/Dockerfile
     restart: unless-stopped
     user: "1000:1000"
@@ -57,7 +57,7 @@ services:
   switchprices-frontend:
     container_name: switchprices-frontend
     build:
-      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#main"
+      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#master"
       dockerfile: switchprices/frontend/Dockerfile
     restart: unless-stopped
     user: "1000:1000"
@@ -83,7 +83,7 @@ services:
   switchprices-scraper:
     container_name: switchprices-scraper
     build:
-      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#main"
+      context: "https://x-access-token:${SWITCHPRICES_GH_TOKEN}@github.com/nathangemmill/switchprices.git#master"
       dockerfile: switchprices/scraper/Dockerfile
     restart: unless-stopped
     user: "1000:1000"
