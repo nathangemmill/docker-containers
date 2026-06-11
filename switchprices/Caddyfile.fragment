@@ -1,0 +1,21 @@
+# Apply this fragment to /opt/backed-up-volumes/caddy/conf/Caddyfile on dockerbox.
+# After applying, reload Caddy via:
+#   docker compose -f /home/nathangemmill/github/docker-containers/caddy/docker-compose.yaml exec caddy caddy reload --config /etc/caddy/Caddyfile
+#
+# IMPORTANT: Use 'handle' not 'handle_path' for the /api/* block.
+# 'handle_path' strips the /api/ prefix before forwarding, causing FastAPI to
+# receive /health instead of /api/health and returning 404.
+#
+# Domain: switchprices.com.au (confirm CNAME matches before applying)
+
+switchprices.com.au {
+    encode gzip
+
+    handle /api/* {
+        reverse_proxy switchprices-backend:8000
+    }
+
+    handle {
+        reverse_proxy switchprices-frontend:3000
+    }
+}

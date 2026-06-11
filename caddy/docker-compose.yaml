@@ -14,6 +14,7 @@ services:
     networks:
       - caddy_net
       - cloudflared_net
+      - dockhand_net
       - audiobookshelf_net
       - beszel_net
       - campbell_net
@@ -23,6 +24,7 @@ services:
       - mealie_net
       - papra_net
       - qbittorrent_net
+      - switchprices_net
       - uptime_kuma_net
       - vaultwarden_net
     environment:
@@ -96,6 +98,9 @@ networks:
   cloudflared_net:
     external: true
     name: cloudflared_net
+  dockhand_net:
+    external: true
+    name: dockhand_net
   audiobookshelf_net:
     external: true
     name: audiobookshelf_net
@@ -123,6 +128,9 @@ networks:
   qbittorrent_net:
     external: true
     name: qbittorrent_net
+  switchprices_net:
+    external: true
+    name: switchprices_net
   uptime_kuma_net:
     external: true
     name: uptime_kuma_net

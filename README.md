@@ -15,6 +15,7 @@ Each folder represents a different service or stack. For example:
 - `caddy/` — Caddy web server and reverse proxy with authelia added authentication provider
 - `cloudflared/` — Cloudflare Tunnels
 - `docker-volume-backup/` — Automated Docker volume backups
+- `dockhand/` — Dockhand container management UI
 - `ha-mcp/` — Home Assistant MCP server (HTTP mode for Claude Code integration)
 - `invio/` — Invoicing platform
 - `it-tools/` — IT Tools web suite
@@ -23,6 +24,7 @@ Each folder represents a different service or stack. For example:
 - `papra/` — Papra document management
 - `pihole/` — Pi-hole network-wide ad blocker and DNS provider for tailscale clients
 - `qbittorrent/` — qBittorrent client
+- `switchprices/` — SwitchPrices Australian network switch price comparison site (switchprices.com.au)
 - `tailscale/` — Tailscale VPN
 - `uptime-kuma/` — Uptime Kuma monitoring
 - `vaultwarden/` — Vaultwarden password manager
