@@ -22,7 +22,6 @@ services:
       NOTIFICATION_URLS: ${DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS}
       NOTIFICATION_LEVEL: info
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
     volumes:
       # allow the backup container to stop/start containers if configured

@@ -59,8 +59,6 @@ jobs:
       SMTP_PORT: ${{secrets.SMTP_PORT}}
       SMTP_USER: ${{secrets.SMTP_USER}}
       SMTP_PASSWORD: ${{secrets.SMTP_PASSWORD}}
-      #watchtower
-      WATCHTOWER_NOTIFICATION_URL: ${{secrets.WATCHTOWER_NOTIFICATION_URL}}
       #campbellsfamilycare
       CAMPBELLS_GH_TOKEN: ${{secrets.CAMPBELLS_GH_TOKEN}}
       CAMPBELLS_TURNSTILE_SECRET_KEY: ${{secrets.CAMPBELLS_TURNSTILE_SECRET_KEY}}

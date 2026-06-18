@@ -50,8 +50,6 @@ services:
       retries: 3
       start_period: 15s
     labels:
-      - "com.centurylinklabs.watchtower.enable=false"
-      - "com.centurylinklabs.watchtower.monitor-only=true"
       - "managed-by=pipeline"
 
   authelia:
@@ -83,7 +81,6 @@ services:
       retries: 3
       start_period: 30s
     labels:
-      - "com.centurylinklabs.watchtower.enable=false"
       - "managed-by=pipeline"
 
 volumes:

@@ -19,7 +19,6 @@ services:
       retries: 3
       start_period: 15s
     labels:
-      - "com.centurylinklabs.watchtower.enable=false"
       - "managed-by=pipeline"
 
   beszel-agent:
@@ -39,7 +38,6 @@ services:
       TOKEN: ${BESZEL_ENVIRONMENT_TOKEN}
       KEY: ${BESZEL_ENVIRONMENT_KEY}
     labels:
-      - "com.centurylinklabs.watchtower.enable=false"
       - "managed-by=pipeline"
 
 networks:

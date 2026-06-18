@@ -17,7 +17,6 @@ services:
     security_opt:
       - no-new-privileges:true
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 networks:
   qbittorrent_net:
