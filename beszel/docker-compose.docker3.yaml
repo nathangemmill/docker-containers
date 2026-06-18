@@ -15,5 +15,4 @@ services:
       TOKEN: ${BESZEL_DOCKER3_TOKEN}
       KEY: ${BESZEL_DOCKER3_KEY}
     labels:
-      - "com.centurylinklabs.watchtower.enable=false"
       - "managed-by=pipeline"

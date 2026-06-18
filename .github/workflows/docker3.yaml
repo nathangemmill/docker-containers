@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - "unifi/**"
-      - "watchtower/**"
       - "docker-volume-backup/**"
       - "beszel/**"
   workflow_dispatch:
@@ -19,8 +18,6 @@ jobs:
       #beszel
       BESZEL_DOCKER3_TOKEN: ${{secrets.BESZEL_DOCKER3_TOKEN}}
       BESZEL_DOCKER3_KEY: ${{secrets.BESZEL_DOCKER3_KEY}}
-      #watchtower
-      WATCHTOWER_NOTIFICATION_URL: ${{secrets.WATCHTOWER_NOTIFICATION_URL}}
       #docker-volume-backup
       DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS: ${{secrets.DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS}}
       DOCKER_VOLUME_BACKUP_AZURE_STORAGE_ACCOUNT_NAME: ${{secrets.DOCKER_VOLUME_BACKUP_AZURE_STORAGE_ACCOUNT_NAME}}
@@ -34,7 +31,6 @@ jobs:
       - name: Deploy containers
         run: |
           docker compose -f beszel/docker-compose.docker3.yaml up -d --remove-orphans
-          docker compose -f watchtower/docker-compose.yaml up -d --remove-orphans
           docker compose -f docker-volume-backup/docker-compose.docker3.yaml up -d --remove-orphans
           docker compose -f unifi/docker-compose.docker3.yaml up -d --remove-orphans
 

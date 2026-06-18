@@ -19,5 +19,4 @@ services:
     networks:
       - dockhand_net
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"

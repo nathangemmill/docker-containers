@@ -7,7 +7,7 @@ Always update `README.md` when adding or removing containers (i.e. when compose 
 Two hosts are managed by this repo:
 
 - **dockerbox** — primary host. Deploys all `docker-compose.yaml` files automatically via the `dockerbox` workflow.
-- **docker3** — secondary host. Only deploys services with a `docker-compose.docker3.yaml` file (currently: `unifi`, `watchtower`, `docker-volume-backup`).
+- **docker3** — secondary host. Only deploys services with a `docker-compose.docker3.yaml` file (currently: `unifi`, `docker-volume-backup`, `beszel`).
 
 ## Naming Convention
 - `docker-compose.yaml` → deploys to **dockerbox**

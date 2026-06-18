@@ -21,7 +21,6 @@ services:
       retries: 3
     labels:
       - "managed-by=pipeline"
-      - "com.centurylinklabs.watchtower.enable=true"
 
   switchprices-backend:
     container_name: switchprices-backend
@@ -52,7 +51,6 @@ services:
       start_period: 30s
     labels:
       - "managed-by=pipeline"
-      - "com.centurylinklabs.watchtower.enable=false"
 
   switchprices-frontend:
     container_name: switchprices-frontend
@@ -79,7 +77,6 @@ services:
       start_period: 30s
     labels:
       - "managed-by=pipeline"
-      - "com.centurylinklabs.watchtower.enable=false"
 
   switchprices-scraper:
     container_name: switchprices-scraper
@@ -107,7 +104,6 @@ services:
       start_period: 15s
     labels:
       - "managed-by=pipeline"
-      - "com.centurylinklabs.watchtower.enable=false"
 
 networks:
   switchprices_net:

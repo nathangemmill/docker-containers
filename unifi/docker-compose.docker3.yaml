@@ -15,7 +15,6 @@ services:
     volumes:
       - /opt/backed-up-volumes/unifi-controller:/unifi
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
     ports:
       # Core

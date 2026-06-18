@@ -32,7 +32,6 @@ services:
       retries: 3
       start_period: 30s
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
 
   frontend:
@@ -53,5 +52,4 @@ services:
     networks:
       - invio_net
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
       - "managed-by=pipeline"
