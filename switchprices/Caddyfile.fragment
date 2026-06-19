@@ -20,6 +20,14 @@ switchprices.com.au {
         reverse_proxy switchprices-backend:8000
     }
 
+    # T-05-03 defense-in-depth: deny external access to the internal sync path.
+    # The scraper reaches /internal/sync-prices directly over the Docker internal
+    # network (bypassing Caddy), so this block only affects external requests.
+    # Placed BEFORE /api/* so it takes precedence.
+    handle /internal/* {
+        respond 403
+    }
+
     handle /api/* {
         reverse_proxy switchprices-backend:8000
     }
