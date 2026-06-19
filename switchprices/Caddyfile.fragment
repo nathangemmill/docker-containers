@@ -16,7 +16,7 @@ switchprices.com.au {
     encode gzip
 
     handle /admin* {
-        import authelia
+        import authelia-switchprices
         reverse_proxy switchprices-backend:8000
     }
 

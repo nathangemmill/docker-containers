@@ -39,6 +39,7 @@ services:
     environment:
       - DATABASE_URL=postgresql+asyncpg://switchprices:${SWITCHPRICES_POSTGRES_PASSWORD}@switchprices-postgres:5432/switchprices
       - SECRET_KEY=${SWITCHPRICES_SECRET_KEY}
+      - DEEPSEEK_API_KEY=${SWITCHPRICES_DEEPSEEK_API}
     depends_on:
       switchprices-postgres:
         condition: service_healthy
