@@ -92,6 +92,7 @@ services:
       - switchprices_internal
     environment:
       - DATABASE_URL=postgresql+asyncpg://switchprices:${SWITCHPRICES_POSTGRES_PASSWORD}@switchprices-postgres:5432/switchprices
+      - BACKEND_URL=http://switchprices-backend:8000
     depends_on:
       switchprices-postgres:
         condition: service_healthy
