@@ -28,7 +28,6 @@ Each folder represents a different service or stack. For example:
 - `tailscale/` — Tailscale VPN
 - `uptime-kuma/` — Uptime Kuma monitoring
 - `vaultwarden/` — Vaultwarden password manager
-- `unifi/` — Unifi network controller *(docker3 only)*
 
 ## Usage
 1. **Clone the repository:**
@@ -49,7 +48,7 @@ Each folder represents a different service or stack. For example:
 Two GitHub Actions workflows handle deployment:
 
 - **dockerbox** — runs on the `dockerbox` host. Deploys every service that has a `docker-compose.yaml` on every push to `main`.
-- **docker3** — runs on the `docker3` host. Deploys only services with a `docker-compose.docker3.yaml` file (currently `unifi`, `docker-volume-backup`, `beszel`), triggered on changes to those paths.
+- **docker3** — runs on the `docker3` host. Deploys only services with a `docker-compose.docker3.yaml` file (currently `docker-volume-backup`, `beszel`), triggered on changes to those paths.
 
 Both workflows remove any running containers that are not labelled `managed-by=pipeline`, keeping each host clean.
 

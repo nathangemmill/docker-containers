@@ -8,8 +8,8 @@ services:
     networks:
       - audiobookshelf_net
     volumes:
-      - /opt/not-backed-up-volumes/audiobookshelf/audiobooks:/audiobooks
-      - /opt/not-backed-up-volumes/audiobookshelf/podcasts:/podcasts
+      - /seconddisk/not-backed-up-volumes/audiobookshelf/audiobooks:/audiobooks
+      - /seconddisk/not-backed-up-volumes/audiobookshelf/podcasts:/podcasts
       - /opt/backed-up-volumes/audiobookshelf/config:/config
       - /opt/backed-up-volumes/audiobookshelf/metadata:/metadata
     environment:
