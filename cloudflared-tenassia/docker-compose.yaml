@@ -1,0 +1,25 @@
+services:
+  tunnel:
+    container_name: cloudflared-tenassia-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - cloudflared_net
+    command: tunnel --metrics localhost:2000 run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TENASSIA_TUNNEL_TOKEN}
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "managed-by=pipeline"
+networks:
+  cloudflared_net:
+    external: true
+    name: cloudflared_net
