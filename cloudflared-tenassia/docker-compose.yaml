@@ -7,7 +7,7 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - cloudflared_net
+      - cloudflared_tenassia_net
     command: tunnel --metrics localhost:2000 run
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARED_TENASSIA_TUNNEL_TOKEN}
@@ -20,6 +20,6 @@ services:
     labels:
       - "managed-by=pipeline"
 networks:
-  cloudflared_net:
+  cloudflared_tenassia_net:
     external: true
-    name: cloudflared_net
+    name: cloudflared_tenassia_net
