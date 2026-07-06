@@ -14,6 +14,7 @@ Each folder represents a different service or stack. For example:
 - `beszel/` — Container/performance monitoring *(also docker3)*
 - `caddy/` — Caddy web server and reverse proxy with authelia added authentication provider
 - `cloudflared/` — Cloudflare Tunnels
+- `cloudflared-tenassia/` — Cloudflare Tunnel for the tenassia client tenancy
 - `docker-volume-backup/` — Automated Docker volume backups
 - `dockhand/` — Dockhand container management UI
 - `ha-mcp/` — Home Assistant MCP server (HTTP mode for Claude Code integration)

@@ -35,6 +35,7 @@ jobs:
       AUTHELIA_DUO_API_SECRET_KEY: ${{secrets.AUTHELIA_DUO_API_SECRET_KEY}}
       #cloudflare tunnel
       CLOUDFLARED_TUNNEL_TOKEN: ${{secrets.CLOUDFLARED_TUNNEL_TOKEN}}
+      CLOUDFLARED_TENASSIA_TUNNEL_TOKEN: ${{secrets.CLOUDFLARED_TENASSIA_TUNNEL_TOKEN}}
       #docker-volume-backup
       DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS: ${{secrets.DOCKER_VOLUME_BACKUP_NOTIFICATION_URLS}}
       DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONTAINER_NAME: ${{secrets.DOCKER_VOLUME_BACKUP_AZURE_STORAGE_CONTAINER_NAME}}
@@ -87,7 +88,7 @@ jobs:
 
       - name: Create service networks
         run: |
-          for net in caddy_net cloudflared_net audiobookshelf_net beszel_net campbell_net dockhand_net itgo_net invio_net it_tools_net mealie_net mealie_internal papra_net qbittorrent_net uptime_kuma_net vaultwarden_net switchprices_net switchprices_internal; do
+          for net in caddy_net cloudflared_net cloudflared_tenassia_net audiobookshelf_net beszel_net campbell_net dockhand_net itgo_net invio_net it_tools_net mealie_net mealie_internal papra_net qbittorrent_net uptime_kuma_net vaultwarden_net switchprices_net switchprices_internal; do
             docker network create --driver bridge $net || true
           done
 
