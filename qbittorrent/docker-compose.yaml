@@ -12,7 +12,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - /opt/not-backed-up-volumes/qbittorrent/appdata:/config
-      - /opt/not-backed-up-volumes/qbittorrent/downloads:/downloads #optional
+      - /seconddisk/not-backed-up-volumes/qbittorrent/downloads:/downloads #optional
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
