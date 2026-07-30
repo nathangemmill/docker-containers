@@ -13,6 +13,10 @@ services:
     # Volumes store your data between container upgrades
     volumes:
       - /opt/backed-up-volumes/pihole/etc-pihole:/etc/pihole
+      # Persist FTL.log across container recreates. Without this the log lives only in the
+      # container filesystem, so every pipeline deploy destroys it -- including the evidence
+      # of whatever happened during that recreate. Not backed up: logs are diagnostic only.
+      - /opt/not-backed-up-volumes/pihole/var-log:/var/log/pihole
       # If you have custom dnsmasq configs, uncomment and use the line below:
       # - /home/nathangemmill/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
     cap_add:
