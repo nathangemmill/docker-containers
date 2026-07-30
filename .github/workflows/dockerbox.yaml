@@ -53,6 +53,8 @@ jobs:
       #papra
       PAPRA_AUTH_SECRET: ${{secrets.PAPRA_AUTH_SECRET}}
       PAPRA_EMAILS_FROM_ADDRESS: ${{secrets.PAPRA_EMAILS_FROM_ADDRESS}}
+      #pihole
+      PIHOLE_API_PASSWORD: ${{secrets.PIHOLE_API_PASSWORD}}
       #vaultwarden
       VAULTWARDEN_ADMIN_TOKEN: ${{secrets.VAULTWARDEN_ADMIN_TOKEN}}
       #smtp (shared)

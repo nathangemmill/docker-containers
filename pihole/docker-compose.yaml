@@ -6,8 +6,13 @@ services:
     environment:
       # Set the appropriate timezone for your location
       TZ: 'Australia/Melbourne'
-      # Set a password to access the web interface. Set to a value you choose.
-      # FTLCONF_webserver_api_password: 'changeme'
+      # Set a password to access the web interface. Injected from the PIHOLE_API_PASSWORD
+      # GitHub Actions secret. This is authoritative: FTL re-applies it on every start and
+      # the setting becomes read-only in the web UI / CLI, so the password can never drift
+      # across container recreates (which is what kept breaking the Home Assistant integration).
+      # The :? guard makes the deploy fail loudly if the secret is missing, rather than
+      # interpolating an empty string -- which Pi-hole treats as "no password at all".
+      FTLCONF_webserver_api_password: '${PIHOLE_API_PASSWORD:?PIHOLE_API_PASSWORD must be set}'
       # In bridge mode you'd set dns_listeningMode to 'all'. Host mode is fine with this value too.
       FTLCONF_dns_listeningMode: 'all'
     # Volumes store your data between container upgrades
